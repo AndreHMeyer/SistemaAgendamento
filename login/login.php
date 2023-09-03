@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('conexao.php');
+include('..\bancoDeDados\conexao.php');
 
 if(empty($_POST['email']) || empty($_POST['senha'])) {
 	header('Location: index.php');

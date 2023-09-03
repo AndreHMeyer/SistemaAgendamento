@@ -8,6 +8,8 @@ CREATE TABLE pessoa (
     email VARCHAR(50),
     cpf VARCHAR(16),
     dataNascimento date,
+    telefone VARCHAR(22),
+    endereco VARCHAR(255),
     PRIMARY KEY (id)
 );
 

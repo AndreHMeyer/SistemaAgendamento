@@ -1,6 +1,7 @@
 <?php
 session_start();
-include("conexao.php");
+
+include("..\bancoDeDados\conexao.php");
 
 $nome = mysqli_real_escape_string($conexao, trim($_POST['nome']));
 $email = mysqli_real_escape_string($conexao, trim($_POST['email']));
@@ -10,7 +11,7 @@ $sql = "select count(*) as total from usuario where email = '$email'";
 $result = mysqli_query($conexao, $sql);
 $row = mysqli_fetch_assoc($result);
 
-if($row['total'] == 1) {
+if($row['total'] >= 1) {
 	$_SESSION['email_existe'] = true;
 	header('Location: cadastro.php');
 	exit;
