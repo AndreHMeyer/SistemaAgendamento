@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Remember Med</title>
+  <link rel="stylesheet" href="../includes/bootstrap-4.0.0/bootstrap-4.0.0/dist/css/bootstrap.css" />
+  <script src="../includes/jquery-3.7.1.js"></script>
+</head>
+<style>
+  body {
+    background-image: url("../img/imagem_login.jpeg"); /*Fundo da página com o a imagem*/
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    /* Centraliza a imagem na página*/
+    background-attachment: fixed;
+    /* Fixa a imagem para que ela não role  */
+  }
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+
+  .centered{
+    border-radius: 10px;
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    text-align: center;
+  }
+
+  h1 {
+    color: #252EFF;
+    margin-top: 30px;
+    margin-bottom: 40px;
+  }
+
+  .label-name {
+    width: 300px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .campo-form {
+    width: 360px;
+    border-radius: 10px;
+    border: #252EFF 1px solid;
+    margin-left: 20px;
+  }
+
+  .btn-login {
+    height: 40px;
+    width: 300px;
+    border-radius: 50px;
+    border: #252EFF 1px solid;
+    background-color: white;
+    color: #252EFF;
+  }
+
+</style>
+
+<body>
+  <div class="container">
+    <div class="centered">
+      <form>
+        <h1><b>Login</b></h1>
+        <div class="form-outline mb-4">
+          <input type="text" id="name" class="form-control campo-form" placeholder="Nome do Usuário" />
+          <div id="nameError" class="invalid-feedback d-none">
+            <i class="bi bi-exclamation-circle"></i> <span id="userErrorMessage"></span>
+          </div>
+        </div>
+
+        <div class="form-outline mb-4">
+          <input type="password" id="senha" class="form-control campo-form" placeholder="Senha" />
+          <div id="senhaError" class="invalid-feedback d-none">
+            <i class="bi bi-exclamation-circle"></i> <span id="senhaErrorMessage"></span>
+          </div>
+        </div>
+        
+
+        <div class="row mb-4">
+          <div class="col">
+            <a href="#!">Esqueceu a senha?</a>
+          </div>
+        </div>
+
+        <div class="row mb-4">
+          <div class="col d-flex justify-content-center">
+            <button type="button" id="btnLogin" class="btn btn-primary btn-block btn-login d-flex align-items-center justify-content-center">Fazer Login</button>
+          </div>
+        </div>
+        
+      </form>
+    </div>
+  </div>
+</body>
+
+<script>
+ $(document).ready(function() {
+  $("#btnLogin").click(function() {
+    var userName = $("#name").val();
+    var senha = $("#senha").val();
+
+    var data = {
+      userName: userName,
+      senha: senha
+    };
+
+    $.ajax({
+      type: "POST",
+      url: "/login/login.php",
+      data: data,
+      success: function(response) {
+        if (response === 'success') {
+          // Usuário encontrado com sucesso, faça algo
+          // window.location.href = '';
+        } else if (response === 'password_error') {
+          // Senha incorreta, atualize a mensagem de erro e mostre-a
+          $("#senhaErrorMessage").text("Senha incorreta. Tente novamente.");
+          $("#senhaError").removeClass("d-none");
+        } else if (response === 'user_not_found') {
+          // Usuário não encontrado, atualize a mensagem de erro e mostre-a
+          $("#senhaErrorMessage").text("Usuário não encontrado. Registre-se primeiro.");
+          $("#senhaError").removeClass("d-none");
+        } else {
+          // Trate outros tipos de resposta ou erros, se necessário
+          
+        }
+      },
+      error: function(xhr, status, error) {
+        // Manipule erros de AJAX, se houver
+        console.error(error);
+      }
+    });
+  });
+});
+
+
+</script>
+
+
+</html>
