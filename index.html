@@ -148,13 +148,14 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "teste.php",
+                    url: "./controller/autenticacao.php",
                     dataType: "json",
                     data: JSON.stringify(data),
                     success: function (response) {
-
+                        console.log(response);
                         if (response.result === 'success') { // caso seja validado corretamente envia o usuário para a tela inicial do sistemas
 
+                            return true;
                             window.location.href = 'pagina_de_sucesso.html';
                         } else if (response.result === 'senha_error') { // caso o result, seja essa a senha esta incorreta e mostra ao usuário
 

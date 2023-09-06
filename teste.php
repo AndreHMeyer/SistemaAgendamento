@@ -4,16 +4,17 @@ use Database\ConexaoDB;
 use Database\RepositorioPessoas;
 use Pessoa\Pessoa;
 
+
 //include(".\bancoDeDados\ConexaoDB.php");
 require_once(".\bancoDeDados\RepositorioPessoas.php");
+require_once (".\model\usuarios\Login.php");
 
-$conexao = new ConexaoDB();
-$conexao = $conexao->criarConexao();
+$login = new Login('joao@teste.com', 'hashed_password1');
 
-$repo = new RepositorioPessoas();
+$login->autenticar();
 
-$pessoa = $repo->obterPessoaByCpf('123456');
-if ($pessoa) {
-    $repo->deletePessoa($pessoa);
-}
+$response = array("result" => "success");
+//var_dump($response); exit();
+return json_encode($response);
+
 

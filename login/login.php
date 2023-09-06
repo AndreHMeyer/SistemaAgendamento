@@ -3,7 +3,7 @@ session_start();
 include('..\bancoDeDados\conexao.php');
 
 if(empty($_POST['email']) || empty($_POST['senha'])) {
-	header('Location: index.php');
+	header('Location: index-teste.php');
 	exit();
 }
 
@@ -23,6 +23,6 @@ if($row == 1) {
 	exit();
 } else {
 	$_SESSION['nao_autenticado'] = true;
-	header('Location: index.php');
+	header('Location: index-teste.php');
 	exit();
 }
