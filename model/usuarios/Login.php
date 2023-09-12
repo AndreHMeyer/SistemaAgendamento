@@ -56,10 +56,8 @@ class Login
         $row = mysqli_num_rows($result);
 
         if($row == 1) {
-            echo 'autenticado';
             return true;
         } else {
-           echo 'nao autenticado';
            return false;
         }
 

@@ -69,8 +69,8 @@
             <form>
                 <h1><b>Login</b></h1>
                 <div class="form-outline mb-4">
-                    <input type="text" id="name" class="form-control campo-form" placeholder="Nome do Usuário" />
-                    <div id="nameError" class="invalid-feedback d-none" style="margin-bottom: -10px;">
+                    <input type="text" id="email" class="form-control campo-form" placeholder="Nome do Usuário" />
+                    <div id="emailError" class="invalid-feedback d-none" style="margin-bottom: -10px;">
                         <i class="bi bi-exclamation-circle"></i>
                         <span id="userErrorMessage" style="margin-right:210px;"></span>
                     </div>
@@ -116,19 +116,19 @@
 <script>
     $(document).ready(function () {
         $("#btnLogin").click(function () {
-            var nome = $("#name").val();
+            var email = $("#email").val();
             var senha = $("#senha").val();
 
-            if (nome === "" || senha === "") { // Verrifica se os campos estão vazios
+            if (email === "" || senha === "") { // Verrifica se os campos estão vazios
 
                 console.log("Campos vazios");
                 $("#emptyCampos").parent().css("display", "block");
                 $("#emptyErrorMessage").text("Por favor preencha todos os campos."); // Mensagem de erro
 
-                if (nome === "") {
+                if (email === "") {
                     $("#userErrorMessage").text("Usuário não informado."); // Messagem de erro 
-                    $("#nameError").removeClass("d-none");
-                    $("#name").addClass("is-invalid");
+                    $("#emailError").removeClass("d-none");
+                    $("#email").addClass("is-invalid");
                 }
 
                 if (senha === "") {
@@ -142,7 +142,7 @@
             } else {
 
                 var data = {
-                    nome: nome,
+                    email: email,
                     senha: senha
                 };
 
@@ -151,29 +151,27 @@
                     url: "./controller/autenticacao.php",
                     dataType: "json",
                     data: JSON.stringify(data),
+
                     success: function (response) {
-                        console.log(response);
-                        if (response.result === 'success') { // caso seja validado corretamente envia o usuário para a tela inicial do sistemas
 
-                            return true;
+                        if (response.result === 'success') { // Caso seja validado corretamente, envia o usuário para a tela inicial do sistema
                             window.location.href = 'pagina_de_sucesso.html';
-                        } else if (response.result === 'senha_error') { // caso o result, seja essa a senha esta incorreta e mostra ao usuário
-
-                            $("#senhaErrorMessage").text("Senha incorreta."); // Mensagem de erro
+                        } else if (response.result === 'failed') { // Caso a senha esteja incorreta, mostra ao usuário
+                            $("#senhaErrorMessage").text("Senha incorreta"); // Mensagem de erro
                             $("#senhaError").removeClass("d-none");
-                            $("#senha").addClass("is-invalid"); // Elemento para colocar campo como invalido
-                        } else if (response.result === 'usuario_not_found') { // caso o result seja essa, o usuário não foi encontrado e mostar ao usuário
-                            $("#userErrorMessage").text("Usuário não encontrado."); // Messagem de erro 
-                            $("#nameError").removeClass("d-none");
-                            $("#name").addClass("is-invalid"); // elemento que indica campo invalido
+                            $("#senha").addClass("is-invalid"); // Elemento para indicar campo como inválido
                         } else {
-                            alert('Erro desconhecido.');
+                            // Exibir informações de erro mais detalhadas
+                            console.error('Erro desconhecido:', response.error); // Log do erro no console
+                            alert('Erro desconhecido. Detalhes: ' + response.error); // Exibir mensagem de erro ao usuário
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert('Erro de comunicação com o servidor.');
+                        console.error(error); // Log do erro no console
+                        alert('Erro de comunicação com o servidor. Detalhes: ' + error); // Exibir mensagem de erro ao usuário
                     }
                 });
+
             }
         });
     });
