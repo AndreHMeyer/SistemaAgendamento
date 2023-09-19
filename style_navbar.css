@@ -22,7 +22,6 @@
   width: 30px;
   height: 20px;
   position: relative;
-  cursor: pointer;
 }
 
 .animated-icon span {
@@ -105,7 +104,7 @@
   width: 200px;
 }
 
-.nav-item:hover { /*Quando o usuáirio passa por cima do espaço dos icones*/
+#sidebar .nav-item:hover { /*Quando o usuáirio passa por cima do espaço dos icones*/
   background-color: #3B3B3D; 
 }
 
@@ -114,7 +113,4 @@
   outline: none;
 }
 
-.sing_out{
-  cursor: pointer;
-}
 
