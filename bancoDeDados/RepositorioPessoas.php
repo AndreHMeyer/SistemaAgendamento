@@ -48,9 +48,36 @@ class RepositorioPessoas
             return false; //Necessário lançar exceção
         }
 
+    }
+
+    public function obterTodasPessoas()
+    {
+        $conexao = $this->conexao;
+
+        $sql = "SELECT * FROM PESSOA order by id asc";
+        $result = mysqli_query($conexao, $sql);
+
+        if ($result->num_rows > 0) {
 
 
+            $pessoa = [];
 
+            forEach($result as $linha) {
+                $row = $result->fetch_assoc();
+                var_dump($row);
+//                $pessoa[] = new Pessoa(
+//                    $row['id'],
+//                    $row['nome'],
+//                    $row['email'],
+//                    $row['cpf'],
+//                    $row['dataNascimento'],
+//                    $row['telefone'],
+//                    $row['endereco']
+//                );
+            }
+
+            var_dump($pessoa);
+        }
     }
 
     public function inserirPessoa(Pessoa $pessoa)
