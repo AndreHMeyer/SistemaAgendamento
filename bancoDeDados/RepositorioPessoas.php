@@ -62,21 +62,20 @@ class RepositorioPessoas
 
             $pessoa = [];
 
-            forEach($result as $linha) {
-                $row = $result->fetch_assoc();
-                var_dump($row);
-//                $pessoa[] = new Pessoa(
-//                    $row['id'],
-//                    $row['nome'],
-//                    $row['email'],
-//                    $row['cpf'],
-//                    $row['dataNascimento'],
-//                    $row['telefone'],
-//                    $row['endereco']
-//                );
+            while ($row = $result->fetch_assoc()) {
+
+                $pessoa[] = new Pessoa(
+                    $row['id'],
+                    $row['nome'],
+                    $row['email'],
+                    $row['cpf'],
+                    $row['dataNascimento'],
+                    $row['telefone'],
+                    $row['endereco']
+                );
             }
 
-            var_dump($pessoa);
+            return $pessoa;
         }
     }
 

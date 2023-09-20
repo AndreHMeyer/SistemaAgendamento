@@ -19,8 +19,9 @@ require_once (".\bancoDeDados\RepositorioUsuario.php");
 
 $repo = new RepositorioPessoas();
 
-$repo->obterTodasPessoas();
+$pessoa = $repo->obterTodasPessoas();
 
+var_dump($pessoa);
 //$login = new Login('joao@teste.com', 'hashed_password1');
 //
 //$login->autenticar();
