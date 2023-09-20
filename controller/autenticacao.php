@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo  json_encode($result); //Utiliza echo para retornar valor ao AJAX
         }
 
+
     } else {
         // Se a decodificação do JSON falhar, retornar um erro
         header('HTTP/1.1 400 Bad Request');

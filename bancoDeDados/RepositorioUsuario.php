@@ -45,7 +45,25 @@ class RepositorioUsuario
 
     public function obterTodosUsuarios()
     {
+        $conexao = $this->conexao;
 
+        $sql = "SELECT * FROM USUARIO ORDER BY ID";
+        $result = mysqli_query($conexao, $sql);
+
+        if ($result->num_rows > 0) {
+            $usuario = [];
+
+            while ($row = $result->fetch_assoc()) {
+                $usuario[] = new Usuario($row['id'],
+                    $row['nomeUsuario'],
+                    $row['senha'],
+                    $row['email'],
+                    $row['idPessoa']);
+            }
+
+            return $usuario;
+        }
+        return false;
     }
 
     public function insertUsuario($usuario)

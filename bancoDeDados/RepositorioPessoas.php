@@ -77,6 +77,8 @@ class RepositorioPessoas
 
             return $pessoa;
         }
+        return false;
+
     }
 
     public function inserirPessoa(Pessoa $pessoa)
