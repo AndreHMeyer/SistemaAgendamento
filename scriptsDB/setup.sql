@@ -18,9 +18,7 @@ CREATE TABLE usuario (
     nomeUsuario VARCHAR(50),
     senha VARCHAR(55),
     email VARCHAR(50),
-    idPessoa BIGINT,
     PRIMARY KEY (id),
-    FOREIGN KEY (idPessoa) REFERENCES pessoa(id)
 );
 
 CREATE TABLE profissional (

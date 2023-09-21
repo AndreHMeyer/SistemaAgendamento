@@ -7,12 +7,8 @@ if (isset($_SESSION['email'])) {
     session_destroy();
 }
 
-// Evite o armazenamento em cache da página
-header('Cache-Control: no-store, no-cache, must-revalidate');
-header('Pragma: no-cache');
-header('Expires: 0');
-
 // Redireciona o usuário para a página de login
-header('Location: index.html');
+$base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/SistemaAgendamento/';
+header('Location: ' . $base_url . 'index.html');
 exit();
 ?>
