@@ -18,7 +18,7 @@ CREATE TABLE usuario (
     nomeUsuario VARCHAR(50),
     senha VARCHAR(55),
     email VARCHAR(50),
-    PRIMARY KEY (id),
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE profissional (

@@ -7,12 +7,12 @@ INSERT INTO pessoa (nome, email, cpf, dataNascimento) VALUES
     ('Ana Pereira', 'ana@teste.com', '789.123.456-01', '1988-11-03'),
     ('Pedro Lima', 'pedro@teste.com', '654.321.987-01', '2000-07-18');
 
-INSERT INTO usuario (nomeUsuario, senha, email, idPessoa) VALUES
-    ('joao_silva', 'hashed_password1', 'joao@teste.com', 1),
-    ('maria_souza', 'hashed_password2', 'maria@teste.com', 2),
-    ('carlos_santos', 'hashed_password3', 'carlos@teste.com', 3),
-    ('ana_pereira', 'hashed_password4', 'ana@teste.com', 4),
-    ('pedro_lima', 'hashed_password5', 'pedro@teste.com', 5);
+INSERT INTO usuario (nomeUsuario, senha, email) VALUES
+    ('joao_silva', 'hashed_password1', 'joao@teste.com'),
+    ('maria_souza', 'hashed_password2', 'maria@teste.com'),
+    ('carlos_santos', 'hashed_password3', 'carlos@teste.com'),
+    ('ana_pereira', 'hashed_password4', 'ana@teste.com'),
+    ('pedro_lima', 'hashed_password5', 'pedro@teste.com');
 
 INSERT INTO profissional (numConselho, especialidade, idPessoa) VALUES
     ('CRM12345', 'Cardiologia', 1),

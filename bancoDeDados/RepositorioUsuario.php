@@ -12,7 +12,7 @@ class RepositorioUsuario
 
     public function __construct()
     {
-        $conexao = new \Database\ConexaoDB();
+        $conexao = new ConexaoDB();
         $this->conexao = $conexao->criarConexao();
     }
 
@@ -36,7 +36,6 @@ class RepositorioUsuario
                 $row['nomeUsuario'],
                 $row['senha'],
                 $row['email'],
-                $row['idPessoa']
             );
 
             return $usuario;
@@ -53,17 +52,18 @@ class RepositorioUsuario
         $result = mysqli_query($conexao, $sql);
 
         if ($result->num_rows > 0) {
-            $usuario = [];
+            $usuarios = []; // Use a different variable name
 
             while ($row = $result->fetch_assoc()) {
-                $usuario[] = new Usuario($row['id'],
+                $usuarios[] = new Usuario(
+                    $row['id'],
                     $row['nomeUsuario'],
                     $row['senha'],
-                    $row['email'],
-                    $row['idPessoa']);
+                    $row['email']
+                ); // Close the parenthesis properly
             }
 
-            return $usuario;
+            return $usuarios;
         }
         return false;
     }
@@ -133,7 +133,7 @@ class RepositorioUsuario
         $stmt->bind_param('ssss', $nomeUsuario, $email, $senha, $id);
 
         if ($stmt->execute()) {
-            echo 'Usuário atualizado com sucesso' . PHP_EOL;
+            echo 'Usuário atualizado com sucesso!' . PHP_EOL;
             return true;
         } else {
             echo 'Houve um erro ao atualizar o cadastro do usuário' . PHP_EOL;
@@ -156,7 +156,7 @@ class RepositorioUsuario
         $stmt->bind_param('s', $id);
 
         if ($stmt->execute()) {
-            echo 'Usuário excluído com sucesso.';
+            echo 'Usuário excluído com sucesso!';
             return true;
         } else {
             echo 'Houve um erro ao excluir o usuário.';

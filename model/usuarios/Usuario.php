@@ -1,5 +1,13 @@
 <?php
 
+namespace Usuario;
+
+use Database\ConexaoDB;
+use Database\RepositorioUsario;
+use mysqli;
+
+require_once(__DIR__ . "\..\..\bancoDeDados\ConexaoDB.php");
+
 class Usuario
 {
     private $id;
@@ -24,7 +32,7 @@ class Usuario
         return $this->nomeUsuario;
     }
 
-    public function getSenhaHash(): string
+    public function getSenha(): string
     {
         return $this->senhaHash;
     }
