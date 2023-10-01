@@ -1,3 +1,14 @@
+#headBar{
+  position: fixed;
+  background-color: #5272E9; 
+  margin-left: 64px;
+  width: 100%;
+}
+
+.head-item{
+  margin-right: 100px;
+}
+
 #sidebar {
   background-color: #212229;
   width: 64px;
@@ -69,7 +80,6 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  margin-left: -3px;
 }
 
 #toggleSidebar { /*Posicionando o icone da sidebar */
@@ -83,7 +93,7 @@
   margin-left: 10px;
   font-weight: bold; /* Em negrito */
   color: white;
-  opacity: 0; /* Inicia com opacidade 0 para esconder e fazer um transação  */
+  opacity: -1; /* Inicia com opacidade 0 para esconder e fazer um transação  */
   transition: opacity 0.3s; /* Adiciona uma transição suave de opacidade */
 }
 
