@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //Caso o formulário tenha sido envi
     //Obtem os valores dos campos do formulário
     $nome = $_POST["nome"];
     $cpf = $_POST["cpf"];
-    $dataNascimento = $_POST["data_nascimento"];
+    $dataNascimento = $_POST["dataNascimento"];
     $email = $_POST["email"];
     $telefone = $_POST["telefone"];
     $endereco = $_POST["endereco"];
@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") { //Caso o formulário tenha sido envi
 
     } else { //Se não existir pessoa, faz um novo cadastro
 
-        $pessoa = new Pessoa(null, $nome, $email, $cpf, $dataNascimento, "", "");
+        $pessoa = new Pessoa(null, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco);
 
         // Insere a pessoa no banco de dados
         $sucesso = $repo->inserirPessoa($pessoa);
