@@ -8,32 +8,36 @@
   <title>Remember Med</title>
   <link rel="stylesheet" href="includes/bootstrap-4.0.0/bootstrap-4.0.0/dist/css/bootstrap.css">
   <link rel="stylesheet" href="includes/bootstrap-4.0.0/bootstrap-4.0.0/dist/js/bootstrap.min.js">
-  <link rel="stylesheet" href="style_navbar.css">
+  <link rel="stylesheet" type="text/css" href="style_navbar.css">
   <script src="includes/jquery-3.7.1.js"></script>
 
 </head>
 
 <body>
-  
-  <nav class="navbar navbar-expand-lg" style="background-color: #5272E9; margin-left: 64px">
+
+  <nav class="navbar navbar-expand-lg" id="headBar">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="img/info_icon.png"  width="30" height="30" class="d-inline-block align-top" alt="">
-        
-      </a> <span style="color: white;text-align: center;">REMEMBER <br> MED</span>
-    <ul class="navbar-nav ml-auto" >
-      <li class="nav-item">
-        <a href="#" title="Pacientes" class="nav-link">
-          <img src="img/info_icon.png" alt="Info" width="35">
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="./controller/logout.php" title="Pacientes" class="nav-link">
-          <img src="img/sign_out_icon.png" alt="Sign Out" width="35">
-        </a>
-      </li>
-    </ul>
-  </div>
+      <a class="navbar-brand">
+        <img src="img/logo.png" width="40" height="40" class="d-inline-block align-top"
+          alt="Logo Sistema de Agendamento">
+      </a>
+      <span style="color: white; text-align: center; font-weight: bold; margin-left: -20px">
+        <span style="margin-left: 10px;">REMEMBER</span><br>
+        <span style="margin-left: -40px;">MED</span>
+      </span>
+      <ul class="navbar-nav ml-auto">
+        <li class="head-item" style="margin-right: 15px;">
+          <a href="#" title="Pacientes">
+            <img src="img/info_icon.png" alt="Info" width="30">
+          </a>
+        </li>
+        <li class="head-item">
+          <a href="./controller/logout.php" title="Pacientes">
+            <img src="img/sign_out_icon.png" alt="Sign Out" width="30">
+          </a>
+        </li>
+      </ul>
+    </div>
   </nav>
 
 
