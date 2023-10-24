@@ -52,7 +52,7 @@ class RepositorioUsuario
         $result = mysqli_query($conexao, $sql);
 
         if ($result->num_rows > 0) {
-            $usuarios = []; // Use a different variable name
+            $usuarios = [];
 
             while ($row = $result->fetch_assoc()) {
                 $usuarios[] = new Usuario(
@@ -60,7 +60,7 @@ class RepositorioUsuario
                     $row['nomeUsuario'],
                     $row['senha'],
                     $row['email']
-                ); // Close the parenthesis properly
+                ); 
             }
 
             return $usuarios;
