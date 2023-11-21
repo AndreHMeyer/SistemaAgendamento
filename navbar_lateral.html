@@ -18,8 +18,6 @@
 </head>
 
 <body>
-
-
     <div class="d-flex flex-column flex-shrink-0" id="sidebar">
         <nav class="navbar navbar-dark">
             <div class="container-fluid" style="margin-left: -15px;">
@@ -34,19 +32,17 @@
                         </div>
                     </div>
                 </button>
-
-
             </div>
         </nav>
         <ul class="nav nav-pills nav-flush flex-column mb-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link " title="Pacientes">
+                <a href="#" class="nav-link " title="Pacientes" data-toggle="modal" data-target="#paciente">
                     <img width="35" src="img/user_icon.png" alt="Icone de Usuário">
                     <span class="item-name">Pacientes</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link" title="Profissionais">
+                <a href="#" class="nav-link" title="Profissionais" data-toggle="modal" data-target="#profissional">
                     <img width="35" src="img/doctor_user.png" alt="Icone de Profissionais">
                     <span class="item-name">Profissionais</span>
                 </a>
@@ -58,6 +54,13 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a href="calendario.php" class="nav-link " title="Agendamentos">
+                    <img width="35" src="img/agenda_icon.png" alt="Icone de Agendamentos">
+                    <span class="item-name">Agendamentos</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
                 <a href="#" class="nav-link " title="Configurações">
                     <img width="35" src="img/settings_icon.png" alt="Icone do Cadastro de Profissionais">
                     <span class="item-name">Configurações</span>
@@ -65,34 +68,202 @@
             </li>
         </ul>
     </div>
+    <div class="modal fade" id="paciente">
+        <div class="modal-dialog modal-lg " role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cadastrar Paciente</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formCliente">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control col-sm-12" id="nome" name="nome"
+                                placeholder="Nome Sobrenome" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="cpf">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" name="cpf"
+                                        placeholder="123.456.789-10" required>
+                                </div>
+                                <div class="col">
+                                    <label for="dataNascimento">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
+                                        placeholder="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone" name="telefone"
+                                        placeholder="(99)9 9999-1234" required>
+                                </div>
+                                <div class="col">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="nome@email.com" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="endereco">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco" name="endereco"
+                                        placeholder="Rua 123, número 456" required>
+                                </div>
+                                <!-- <div class="col">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" required>
+                                </div> -->
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-link"
+                            style="margin-top: 5px;float: left; color: red;">Excluir</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 5px;float: right"
+                            id="BtnCadastroCliente">Salvar</button>
+                        <button type="button" class="btn btn-link"
+                            style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="profissional">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cadastrar Profissional</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formProfissional">
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control col-sm-12" id="nome" placeholder="Nome Sobrenome"
+                                required>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="cpf">CPF</label>
+                                    <input type="text" class="form-control" id="cpf" placeholder="123.456.789-10"
+                                        required>
+                                </div>
+                                <div class="col">
+                                    <label for="dataNascimento">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="dataNascimento" placeholder="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="telefone">Telefone</label>
+                                    <input type="text" class="form-control" id="telefone" placeholder="(99)9 9999-1234"
+                                        required>
+                                </div>
+                                <div class="col">
+                                    <label for="email">E-mail</label>
+                                    <input type="email" class="form-control" id="email" placeholder="nome@email.com"
+                                        required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="num_conselho">No. Conselho</label>
+                                    <input type="text" class="form-control" id="num_conselho" placeholder="12345"
+                                        required>
+                                </div>
+                                <div class="col">
+                                    <label for="conselho">Conselho</label>
+                                    <input type="text" class="form-control" id="conselho" placeholder="CRM" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="endereco">Endereço</label>
+                                    <input type="text" class="form-control" id="endereco"
+                                        placeholder="Rua 123, número 456" required>
+                                </div>
+                                <!-- <div class="col">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" class="form-control" id="cep" placeholder="00000-000" required>
+                                </div> -->
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-link"
+                            style="margin-top: 5px;float: left; color: red;">Excluir</button>
+                        <button type="submit" class="btn btn-primary" id="BtnCadastroProfissional"
+                            style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="button" class="btn btn-link"
+                            style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
 
-
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         $(document).ready(function () {
             /*Não quero que esses elementos sejam sobescritos, portanto irei usar const para declarara essas variaveis*/
             const $sidebar = $("#sidebar");
             const $toggleSidebarButton = $("#toggleSidebar");
-
             $(".animated-icon").click(function () {
                 $(this).toggleClass("open");
             });
-
-
             // Adicionando ouvinte de eventos, que vai alterar a largura da barra lateral e o ícone 
             $toggleSidebarButton.click(function (e) {
                 e.stopPropagation(); // Impede que o evento de clique se interfira em outras partes do documento
                 $sidebar.toggleClass("expanded");
             });
-
-            // Ouvinte de ventos para fechar a navbar, caso o usuário clique em outra parte da página que não seja a navbar
+            // Ouvinte de eventos para fechar a navbar, caso o usuário clique em outra parte da página que não seja a navbar
             $(document).click(function (e) {
                 if (!$sidebar.is(e.target) && $sidebar.has(e.target).length === 0) {
                     $sidebar.removeClass("expanded");
                 }
             });
+            $('#formCliente').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'controller/cadastrarPessoa.php', // o arquivo PHP que irá processar os dados
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#paciente').modal('hide');
+                    }
+                });
+                alert('Cliente cadastrado/atualizado.');
+            });
+            $('#formProfissional').submit(function (e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'controller/cadastrarProfissional.php', // o arquivo PHP que irá processar os dados
+                    data: $(this).serialize(),
+                    success: function (response) {
+                        $('#profissional').modal('hide');
+                    }
+                });
+                alert('Profissional cadastrado/atualizado.');
+            });
         });
-    </script>
 
+
+    </script>
 </body>
 
 </html>
