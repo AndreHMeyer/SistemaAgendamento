@@ -18,6 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($autenticacao) {
             $result = array("result" => "success");
+            session_start();
+            $_SESSION['usuario'] = $email;
             header('Content-Type: application/json'); // Retorna a resposta em formato JSON para o cliente
             echo  json_encode($result); //Utiliza echo para retornar valor ao AJAX
         } else {

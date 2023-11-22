@@ -155,7 +155,7 @@
                     success: function (response) {
 
                         if (response.result === 'success') { // Caso seja validado corretamente, envia o usuário para a tela inicial do sistema
-                            window.location.href = 'pagina_de_sucesso.html';
+                            window.location.href = 'pagina_de_sucesso.php';
                         } else if (response.result === 'failed') { // Caso a senha esteja incorreta, mostra ao usuário
                             $("#senhaErrorMessage").text("Senha incorreta"); // Mensagem de erro
                             $("#senhaError").removeClass("d-none");
