@@ -63,12 +63,10 @@ if ($profissionais) {
         'nome' => "Rúbia Roberta",
         "cpf" => '126.160.809.74',
         "data_nascimento" => "26/11/2023",
-        "telefone" => '000000000',
+        "telefone" => '4823847230',
         "email" => 'rubia@teste.hsadhasd',
-        "crm" => '12548',
-        "conselho" => 'CRM',
-        "crm" => '12548',
-        "crm" => '12548',
+        "crm" => '35356',
+        "conselho" => 'TESTE',
         "crm_estado" => 'SC',
         "endereco" => 'Rua Aldhemar Veiga'
 
