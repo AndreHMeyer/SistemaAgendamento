@@ -397,7 +397,7 @@
                 row.innerHTML = `
                     <td style="vertical-align: middle;"></td>
                     <td style="display: flex; align-items: center;">
-                        <span class="iniciais">${profissional.iniciais_nome}</span>
+                        <a href="calendario.php?id_profissional=${key}" class="iniciais">${profissional.iniciais_nome}</a>
                         <span style="margin-left: 10px;">${profissional.email}</span>
                     </td>
                     <td style="vertical-align: middle;">${profissional.situacao}</td>

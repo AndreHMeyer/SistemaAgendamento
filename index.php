@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['usuario'])) {
+if(isset($_SESSION['usuario'])) {
     header('Location: pagina_de_sucesso.php');
     exit;
 }

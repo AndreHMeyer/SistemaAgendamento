@@ -1,12 +1,28 @@
-
-
 <?php
-    session_start();
 
-    if(!isset($_SESSION['usuario'])) { 
-        header('Location: index.php');
-        exit;
-    }
+session_start();
+
+if (!isset($_SESSION['usuario'])) {
+    header('Location: index.html');
+    exit;
+}
+$user = "root";
+$conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
+$id_profissional = isset($_REQUEST['id_profissional']) ? $_REQUEST['id_profissional'] : "";
+
+$queryConsultas = "SELECT observacao, data FROM consulta WHERE idProfissional = " . $id_profissional;
+
+$exeConsultas = $conexao->prepare($queryConsultas);
+$exeConsultas->execute();
+$events = [];
+while ($rowConsultas = $exeConsultas->fetch(PDO::FETCH_ASSOC)) {
+    // $data = $rowConsultas['data'];
+    // $observacao = $rowConsultas['observacao'];
+    extract($rowConsultas);
+    $events[] = ['title' => utf8_encode($observacao), 'start' => $data];
+}
+
+
 ?>
 
 <!DOCTYPE html>
@@ -67,40 +83,40 @@
                 navLinks: true, // can click day/week names to navigate views
                 selectable: true,
                 selectMirror: true,
-                select: function(arg) {
-                    var title = prompt('Event Title:');
-                    if (title) {
-                        calendar.addEvent({
-                            title: title,
-                            start: arg.start,
-                            end: arg.end,
-                            allDay: arg.allDay
-                        })
-                    }
-                    calendar.unselect()
-                },
-                eventClick: function(arg) {
-                    if (confirm('Are you sure you want to delete this event?')) {
-                        arg.event.remove()
-                    }
-                },
-                editable: true,
-                dayMaxEvents: true, // allow "more" link when too many events
-                events: 'agendamentos.php',
+                //select: function(arg) {
+                //    var title = prompt('Event Title:');
+                //    if (title) {
+                //        calendar.addEvent({
+                //            title: title,
+                //            start: arg.start,
+                //            end: arg.end,
+                //            allDay: arg.allDay
+                //        })
+                //    }
+                //    calendar.unselect()
+                //},
+                //eventClick: function(arg) {
+                //    if (confirm('Are you sure you want to delete this event?')) {
+                //        arg.event.remove()
+                //    }
+                //},
+                //editable: true,
+                //dayMaxEvents: true, // allow "more" link when too many events
+                //events: <?//= json_encode($events); ?>//,
 
             });
 
-        calendar.render();
+            calendar.render();
         });
     </script>
 </head>
 
 <body>
-    <div id="nav-head">
-    </div>
-    <div id="nav-lateral">
-    </div>
-    <div id='calendar'></div>
+<div id="nav-head">
+</div>
+<div id="nav-lateral">
+</div>
+<div id='calendar'></div>
 </body>
 
 </html>
