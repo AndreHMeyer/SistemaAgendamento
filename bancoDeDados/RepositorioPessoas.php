@@ -71,7 +71,44 @@ class RepositorioPessoas
                     $row['cpf'],
                     $row['dataNascimento'],
                     $row['telefone'],
-                    $row['endereco']
+                    $row['endereco'],
+                    $row['crm'],
+                    $row['especialidade']
+
+                );
+            }
+
+            return $pessoa;
+        }
+        return false;
+
+    }
+
+    public function obterTodosProfissionais()
+    {
+        $conexao = $this->conexao;
+
+        $sql = "SELECT * FROM PESSOA where ESPECIALIDADE is not null order by id asc";
+        $result = mysqli_query($conexao, $sql);
+
+        if ($result->num_rows > 0) {
+
+
+            $pessoa = [];
+
+            while ($row = $result->fetch_assoc()) {
+
+                $pessoa[] = new Pessoa(
+                    $row['id'],
+                    $row['nome'],
+                    $row['email'],
+                    $row['cpf'],
+                    $row['dataNascimento'],
+                    $row['telefone'],
+                    $row['endereco'],
+                    $row['crm'],
+                    $row['especialidade']
+
                 );
             }
 

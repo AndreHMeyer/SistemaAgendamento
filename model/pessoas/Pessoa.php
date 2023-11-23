@@ -17,6 +17,9 @@ class Pessoa
     private $dataNascimento;
     private $telefone;
     private $endereco;
+    private $crm;
+    private $especialidade;
+
 
     /**
      * @param $nome
@@ -25,7 +28,7 @@ class Pessoa
      * @param $dataNascimento
      * @param $telefone
      */
-    public function __construct($id, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco)
+    public function __construct($id, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco, $crm, $especialidade)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -34,6 +37,8 @@ class Pessoa
         $this->dataNascimento = $dataNascimento;
         $this->telefone = $telefone;
         $this->endereco = $endereco;
+        $this->crm = $crm;
+        $this->especialidade = $especialidade;
     }
 
     public function getId()
@@ -104,7 +109,41 @@ class Pessoa
     public function setEndereco($endereco)
     {
         $this->endereco = $endereco;
-}
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCrm()
+    {
+        return $this->crm;
+    }
+
+    /**
+     * @param mixed $crm
+     */
+    public function setCrm($crm): void
+    {
+        $this->crm = $crm;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEspecialidade()
+    {
+        return $this->especialidade;
+    }
+
+    /**
+     * @param mixed $especialidade
+     */
+    public function setEspecialidade($especialidade): void
+    {
+        $this->especialidade = $especialidade;
+    }
+
+
 
 
 

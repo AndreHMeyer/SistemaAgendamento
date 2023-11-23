@@ -15,7 +15,8 @@ $repo = new RepositorioUsuario();
 
 $usuario = $repo->obterTodosUsuarios();
 
-//var_dump($usuario);
+$repoPro = new RepositorioPessoas()
+$profissionais =
 
 //$repo = new RepositorioPessoas();
 //

@@ -12,7 +12,7 @@ if (!empty($id_profissional)) {
     // $profissionais = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
     $profissionais = false;
 } else {
-    $profissionais = $repositorioProfissionais->obterTodasPessoas();
+    $profissionais = $repositorioProfissionais->obterTodosProfissionais();
 }
 
 $ies_situacao = "Ativo";
@@ -25,30 +25,30 @@ if ($profissionais) {
         $firstLeterName = substr($exploNome[0], 0, 1);
         $firstLeterMidle = substr(end($exploNome), 0, 1);
 
-        if ($idProfissional == 2) {
-            $ies_situacao = "Inativo";
-        }
-
-        if ($idProfissional == 4) {
-            $ies_situacao = "Bloqueado";
-        }
-
-        if ($ies_situacao == "Ativo") {
-            $situacao = " <span class='situcao ies_ativa'>" . $ies_situacao . "</span>";
-        } elseif ($ies_situacao == "Inativo") {
-            $situacao = " <span class='situcao ies_inativa'>" . $ies_situacao . "</span>";
-        } elseif ($ies_situacao == "Bloqueado") {
-            $situacao = " <span class='situcao ies_bloqueada'>" . $ies_situacao . "</span>";
-        } else {
-            $situacao = " <span class='situcao ies_bloqueada'> Indefinida </span>";
-        }
+//        if ($idProfissional == 2) {
+//            $ies_situacao = "Inativo";
+//        }
+//
+//        if ($idProfissional == 4) {
+//            $ies_situacao = "Bloqueado";
+//        }
+//
+//        if ($ies_situacao == "Ativo") {
+//            $situacao = " <span class='situcao ies_ativa'>" . $ies_situacao . "</span>";
+//        } elseif ($ies_situacao == "Inativo") {
+//            $situacao = " <span class='situcao ies_inativa'>" . $ies_situacao . "</span>";
+//        } elseif ($ies_situacao == "Bloqueado") {
+//            $situacao = " <span class='situcao ies_bloqueada'>" . $ies_situacao . "</span>";
+//        } else {
+//            $situacao = " <span class='situcao ies_bloqueada'> Indefinida </span>";
+//        }
 
 
         $agenda[$idProfissional] = array(
             'nome' => $nomeCompleto,
             "iniciais_nome" => $firstLeterName . $firstLeterMidle,
             "email" => $profissional->getEmail(),
-            "situacao" => $situacao,
+            "especialidade" => $profissional->getEspecialidade(),
             "ocupacao" => '87% Ocupada',
             "disponibilidade" => '13% Livre',
             "prox_data" => '05/01/2023'
