@@ -1,3 +1,25 @@
+<?php
+$user = "root";
+$conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
+
+$queryPaciente = "SELECT nome FROM pessoa WHERE especialidade IS NULL";
+$exePaciente = $conexao->prepare($queryPaciente);
+$exePaciente->execute();
+
+while ($rowPaciente = $exePaciente->fetch(PDO::FETCH_ASSOC)) {
+    $paciente[] = $rowPaciente['nome'];
+}
+
+$queryProfissional = "SELECT nome FROM pessoa WHERE especialidade IS NOT NULL";
+$exeProfissional = $conexao->prepare($queryProfissional);
+$exeProfissional->execute();
+
+while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
+    $profissional[] = $rowProfissional['nome'];
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -6,14 +28,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="icon" href="img/logo.png"> -->
     <title>Remember Med</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js"
-        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-        crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="style_navbar.css">
 </head>
 
@@ -22,8 +39,7 @@
         <nav class="navbar navbar-dark">
             <div class="container-fluid" style="margin-left: -15px;">
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="toggleSidebar">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" id="toggleSidebar">
                     <div class="navbar">
                         <div class="animated-icon">
                             <span></span>
@@ -42,9 +58,16 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="profissionais.php" class="nav-link" title="Profissionais" > <!-- data-toggle="modal" data-target="#profissional"!-->
+                <a href="profissionais.php" class="nav-link" title="Profissionais">
+                    <!-- data-toggle="modal" data-target="#profissional"!-->
                     <img width="35" src="img/doctor_user.png" alt="Icone de Profissionais">
                     <span class="item-name">Profissionais</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link " title="Consultas" data-toggle="modal" data-target="#consulta">
+                    <img width="35" src="img/agenda_icon.png" alt="Icone de Usuário">
+                    <span class="item-name">Consultas</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -54,7 +77,7 @@
                 </a>
             </li>
 
-            
+
             <li class="nav-item">
                 <a href="#" class="nav-link " title="Configurações">
                     <img width="35" src="img/settings_icon.png" alt="Icone do Cadastro de Profissionais">
@@ -74,26 +97,23 @@
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
-                        
-                      </div>
+
+                    </div>
                     <form id="formCliente">
-                 
+
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nome" name="nome"
-                                placeholder="Nome Sobrenome" required>
+                            <input type="text" class="form-control col-sm-12" id="nome" name="nome" placeholder="Nome Sobrenome" required>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
                                     <label for="cpf">CPF</label>
-                                    <input type="text" class="form-control" id="cpf" name="cpf"
-                                        placeholder="123.456.789-10" required>
+                                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="123.456.789-10" required>
                                 </div>
                                 <div class="col">
                                     <label for="dataNascimento">Data de Nascimento</label>
-                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
-                                        placeholder="" required>
+                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="" required>
                                 </div>
                             </div>
                         </div>
@@ -101,13 +121,11 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefone" name="telefone"
-                                        placeholder="(99)9 9999-1234" required>
+                                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(99)9 9999-1234" required>
                                 </div>
                                 <div class="col">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="nome@email.com" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com" required>
                                 </div>
                             </div>
                         </div>
@@ -115,8 +133,7 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="endereco">Endereço</label>
-                                    <input type="text" class="form-control" id="endereco" name="endereco"
-                                        placeholder="Rua 123, número 456" required>
+                                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua 123, número 456" required>
                                 </div>
                                 <!-- <div class="col">
                                     <label for="cep">CEP</label>
@@ -124,12 +141,9 @@
                                 </div> -->
                             </div>
                         </div>
-                        <button type="button" class="btn btn-link"
-                            style="margin-top: 5px;float: left; color: red;">Excluir</button>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 5px;float: right"
-                            id="BtnCadastroCliente">Salvar</button>
-                        <button type="button" class="btn btn-link"
-                            style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: left; color: red;">Excluir</button>
+                        <button type="submit" class="btn btn-primary" style="margin-top: 5px;float: right" id="BtnCadastroCliente">Salvar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
                     </form>
                 </div>
             </div>
@@ -148,15 +162,13 @@
                     <form id="formProfissional">
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nome" placeholder="Nome Sobrenome"
-                                required>
+                            <input type="text" class="form-control col-sm-12" id="nome" placeholder="Nome Sobrenome" required>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
                                     <label for="cpf">CPF</label>
-                                    <input type="text" class="form-control" id="cpf" placeholder="123.456.789-10"
-                                        required>
+                                    <input type="text" class="form-control" id="cpf" placeholder="123.456.789-10" required>
                                 </div>
                                 <div class="col">
                                     <label for="dataNascimento">Data de Nascimento</label>
@@ -168,13 +180,11 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefone" placeholder="(99)9 9999-1234"
-                                        required>
+                                    <input type="text" class="form-control" id="telefone" placeholder="(99)9 9999-1234" required>
                                 </div>
                                 <div class="col">
                                     <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" placeholder="nome@email.com"
-                                        required>
+                                    <input type="email" class="form-control" id="email" placeholder="nome@email.com" required>
                                 </div>
                             </div>
                         </div>
@@ -182,8 +192,7 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="num_conselho">No. Conselho</label>
-                                    <input type="text" class="form-control" id="num_conselho" placeholder="12345"
-                                        required>
+                                    <input type="text" class="form-control" id="num_conselho" placeholder="12345" required>
                                 </div>
                                 <div class="col">
                                     <label for="conselho">Conselho</label>
@@ -195,8 +204,7 @@
                             <div class="form-row">
                                 <div class="col">
                                     <label for="endereco">Endereço</label>
-                                    <input type="text" class="form-control" id="endereco"
-                                        placeholder="Rua 123, número 456" required>
+                                    <input type="text" class="form-control" id="endereco" placeholder="Rua 123, número 456" required>
                                 </div>
                                 <!-- <div class="col">
                                     <label for="cep">CEP</label>
@@ -204,12 +212,64 @@
                                 </div> -->
                             </div>
                         </div>
-                        <button type="button" class="btn btn-link"
-                            style="margin-top: 5px;float: left; color: red;">Excluir</button>
-                        <button type="submit" class="btn btn-primary" id="BtnCadastroProfissional"
-                            style="margin-top: 5px;float: right">Salvar</button>
-                        <button type="button" class="btn btn-link"
-                            style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: left; color: red;">Excluir</button>
+                        <button type="submit" class="btn btn-primary" id="BtnCadastroProfissional" style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="consulta">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Cadastrar Consulta</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="formConsulta">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="observacao">Tipo de consulta</label>
+                                    <input type="text" class="form-control col-sm-12" id="observacao" placeholder="" required>
+                                    <label for="dataConsulta">Data da consulta</label>
+                                    <input type="date" class="form-control col-sm-12" id="dataConsulta" placeholder="" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="pacianteConsulta">Paciente</label>
+                                    <select class="form-control" id="pacienteConsulta" required>
+                                        <?php
+                                        foreach ($paciente as $nome) {
+                                            echo "<option>" . $nome . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <label for="profissionalConsulta">Profissional</label>
+                                    <select class="form-control" id="profissionalConsulta" required>
+                                        <?php
+                                        foreach ($profissional as $nome) {
+                                            echo "<option>" . $nome . "</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col">
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary" id="BtnCadastroConsulta" style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
 
                     </form>
                 </div>
@@ -217,51 +277,61 @@
         </div>
     </div>
     <script>
-        $(document).ready(function () {
+        $(document).ready(function() {
             /*Não quero que esses elementos sejam sobescritos, portanto irei usar const para declarara essas variaveis*/
             const $sidebar = $("#sidebar");
             const $toggleSidebarButton = $("#toggleSidebar");
-            $(".animated-icon").click(function () {
+            $(".animated-icon").click(function() {
                 $(this).toggleClass("open");
             });
             // Adicionando ouvinte de eventos, que vai alterar a largura da barra lateral e o ícone 
-            $toggleSidebarButton.click(function (e) {
+            $toggleSidebarButton.click(function(e) {
                 e.stopPropagation(); // Impede que o evento de clique se interfira em outras partes do documento
                 $sidebar.toggleClass("expanded");
             });
             // Ouvinte de eventos para fechar a navbar, caso o usuário clique em outra parte da página que não seja a navbar
-            $(document).click(function (e) {
+            $(document).click(function(e) {
                 if (!$sidebar.is(e.target) && $sidebar.has(e.target).length === 0) {
                     $sidebar.removeClass("expanded");
                 }
             });
-            $('#formCliente').submit(function (e) {
+            $('#formCliente').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: 'POST',
                     url: 'controller/cadastrarPessoa.php', // o arquivo PHP que irá processar os dados
                     data: $(this).serialize(),
-                    success: function (response) {
+                    success: function(response) {
                         $('#paciente').modal('hide');
                     }
                 });
                 alert('Cliente cadastrado/atualizado.');
             });
-            $('#formProfissional').submit(function (e) {
+            $('#formProfissional').submit(function(e) {
                 e.preventDefault();
                 $.ajax({
                     type: 'POST',
                     url: 'controller/cadastrarProfissional.php', // o arquivo PHP que irá processar os dados
                     data: $(this).serialize(),
-                    success: function (response) {
+                    success: function(response) {
                         $('#profissional').modal('hide');
                     }
                 });
                 alert('Profissional cadastrado/atualizado.');
             });
+            $('#formConsulta').submit(function(e) {
+                e.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    url: 'controller/cadastrarConsulta.php', // o arquivo PHP que irá processar os dados
+                    data: $(this).serialize(),
+                    success: function(response) {
+                        $('#consulta').modal('hide');
+                    }
+                });
+                alert('Consulta cadastrada.');
+            });
         });
-
-
     </script>
 </body>
 
