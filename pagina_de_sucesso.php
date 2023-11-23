@@ -42,7 +42,7 @@
         $("#nav-head").load("navbar_head.html");
     });
     $(function () {
-        $("#nav-lateral").load("navbar_lateral.html");
+        $("#nav-lateral").load("navbar_lateral.php");
     });
 </script>
 </html>

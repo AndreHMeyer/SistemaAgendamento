@@ -58,7 +58,7 @@ while ($rowConsultas = $exeConsultas->fetch(PDO::FETCH_ASSOC)) {
             $("#nav-head").load("navbar_head.html");
         });
         $(function() {
-            $("#nav-lateral").load("navbar_lateral.html");
+            $("#nav-lateral").load("navbar_lateral.php");
         });
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
@@ -100,9 +100,9 @@ while ($rowConsultas = $exeConsultas->fetch(PDO::FETCH_ASSOC)) {
                 //        arg.event.remove()
                 //    }
                 //},
-                //editable: true,
-                //dayMaxEvents: true, // allow "more" link when too many events
-                //events: <?//= json_encode($events); ?>//,
+                editable: true,
+                dayMaxEvents: true, // allow "more" link when too many events
+                events: <?= json_encode($events); ?>,
 
             });
 
