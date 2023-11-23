@@ -9,6 +9,6 @@ if (isset($_SESSION['usuario'])) {
 
 // Redireciona o usuário para a página de login
 $base_url = 'http://' . $_SERVER['HTTP_HOST'] . '/SistemaAgendamento/';
-header('Location: ' . $base_url . 'index.html');
+header('Location: ' . $base_url . 'index.php');
 exit();
 ?>
