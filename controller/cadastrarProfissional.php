@@ -5,7 +5,7 @@ use Pessoa\Pessoa;
 
 require_once("..\bancoDeDados\RepositorioPessoas.php");
 
-header('Content-Type: application/json');
+//header('Content-Type: application/json');
 
 $nome = $_REQUEST['nome'];
 $cpf = $_REQUEST['cpf'];
