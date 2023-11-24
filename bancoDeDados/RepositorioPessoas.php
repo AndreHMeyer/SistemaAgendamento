@@ -118,6 +118,42 @@ class RepositorioPessoas
 
     }
 
+    public function obterProfissionalPorId($id)
+    {
+        $conexao = $this->conexao;
+
+        $idParam = mysqli_real_escape_string($conexao, $id);
+
+        $sql = "SELECT * FROM PESSOA where ESPECIALIDADE is not null and id = '$idParam'  order by id asc";
+        $result = mysqli_query($conexao, $sql);
+
+        if ($result->num_rows > 0) {
+
+
+            $pessoa = [];
+
+            while ($row = $result->fetch_assoc()) {
+
+                $pessoa[] = new Pessoa(
+                    $row['id'],
+                    $row['nome'],
+                    $row['email'],
+                    $row['cpf'],
+                    $row['dataNascimento'],
+                    $row['telefone'],
+                    $row['endereco'],
+                    $row['crm'],
+                    $row['especialidade']
+
+                );
+            }
+
+            return $pessoa;
+        }
+        return false;
+
+    }
+
     public function inserirPessoa(Pessoa $pessoa)
     {
         $conexao = $this->conexao;
