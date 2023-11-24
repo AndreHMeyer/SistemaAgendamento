@@ -34,3 +34,14 @@ INSERT INTO consulta (data, observacao, idPessoa, idProfissional, idAgenda) VALU
     ('2023-09-12', 'Avaliação ortopédica.', 3, 3, 3),
     ('2023-09-11', 'Retirada de receita.', 4, 4, 4),
     ('2023-09-14', 'Sessão de aconselhamento.', 5, 5, 5);
+
+
+alter table pessoa add column numero_conselho varchar(50);
+alter table pessoa add column tipo_conselho varchar(50);
+alter table pessoa add column estado_conselho varchar(2);
+alter table pessoa add column especialidade varchar(255);
+
+update pessoa set especialidade = 'Dermatologia' where id = 1;
+update pessoa set especialidade = 'Oftalmologia' where id = 2;
+update pessoa set especialidade = 'Reumatologia' where id = 3;
+update pessoa set especialidade = 'Clínico Geral' where id = 4;
