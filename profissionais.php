@@ -512,7 +512,7 @@ if (!isset($_SESSION['usuario'])) {
             success: function(response) {
                 var data = response.response;
 
-                const dataNascimentoFormatada = formatDate(data.data_nascimento);
+                const dataNascimentoFormatada = data.data_nascimento; //formatDate(data.data_nascimento);
 
                 $('#nomeProf').val(data.nome);
                 $('#cpfProf').val(data.cpf);

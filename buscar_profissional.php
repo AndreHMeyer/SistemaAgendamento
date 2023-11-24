@@ -9,8 +9,8 @@ $id_profissional = isset($_REQUEST['id_profissional']) ? $_REQUEST['id_profissio
 $repositorioProfissionais = new \Database\RepositorioPessoas();
 
 if (!empty($id_profissional)) {
-    // $profissionais = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
-    $profissionais = false;
+    $profissionais = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
+
 } else {
     $profissionais = $repositorioProfissionais->obterTodosProfissionais();
 }
@@ -44,22 +44,24 @@ if ($profissionais) {
 //        }
 
 
-        $agenda[$idProfissional] = array(
-            'nome' => $nomeCompleto,
+        $pessoa[$idProfissional] = array(
             "iniciais_nome" => $firstLeterName . $firstLeterMidle,
+            'nome' => $nomeCompleto,
             "email" => $profissional->getEmail(),
             "especialidade" => $profissional->getEspecialidade(),
-            "ocupacao" => '87% Ocupada',
-            "disponibilidade" => '13% Livre',
-            "prox_data" => '05/01/2023'
+            "cpf" => $profissional->getCpf(),
+            "data_nascimento" =>$profissional->getDataNascimento(),
+            "telefone" => $profissional->getTelefone(),
+            "crm" => $profissional->getCrm(),
+            "endereco" => $profissional->getEndereco()
 
         );
     }
 
 
-    echo json_encode(["response" => $agenda]);
+    echo json_encode(["response" => $pessoa]);
 } else {
-    $agenda = array(
+    $pessoa = array(
         'nome' => "Rúbia Roberta",
         "cpf" => '126.160.809.74',
         "data_nascimento" => "26/11/2023",
@@ -72,6 +74,6 @@ if ($profissionais) {
 
     );
 
-    echo json_encode(["response" => $agenda]);
+    echo json_encode(["response" => $pessoa]);
 }
 
