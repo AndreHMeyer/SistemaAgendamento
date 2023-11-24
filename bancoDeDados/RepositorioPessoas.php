@@ -276,17 +276,17 @@ class RepositorioPessoas
     {
         $conexao = $this->conexao;
 
-        $cpf = $pessoa->getCpf();
+        $id = $pessoa->getId();
 
-        $deleteSQL = "DELETE FROM PESSOA WHERE CPF = ?";
+        $deleteSQL = "DELETE FROM PESSOA WHERE ID = ?";
         $stmt = $conexao->prepare($deleteSQL);
-        $stmt->bind_param('s', $cpf);
+        $stmt->bind_param('s', $id);
 
         if ($stmt->execute()) {
-            echo 'Pessoa excluída com sucess.';
+//            echo 'Pessoa excluída com sucess.';
             return true;
         } else {
-            echo 'Houve um erro ao excluir a pessoa.';
+//            echo 'Houve um erro ao excluir a pessoa.';
             return false;
         }
 

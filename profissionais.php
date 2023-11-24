@@ -359,6 +359,8 @@ if (!isset($_SESSION['usuario'])) {
 
 </body>
 <script>
+
+
     function abrirModal() {
         $('#modalProfissional').modal('show')
     }
@@ -473,7 +475,7 @@ if (!isset($_SESSION['usuario'])) {
                         $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
                         $('#modalResponse').modal('show');
                         $('#modalResponse .modal-footer .btn-primary').on('click', function() {
-                            location.reload();
+                            location.reload(true);
                         });
 
                     } else {
@@ -600,7 +602,7 @@ if (!isset($_SESSION['usuario'])) {
                 success: function(response) {
                     if (response && response.success) {
                         $('#mensagemDoModal').text(response.message);
-                        $('.modal-title-response').text('Sucesso!!');
+                        $('.modal-title-response').text('Feito!');
                         $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
                         $('#modalResponse').modal('show');
                         $('#modalResponse .modal-footer .btn-primary').on('click', function() {
