@@ -17,7 +17,9 @@ class Pessoa
     private $dataNascimento;
     private $telefone;
     private $endereco;
-    private $crm;
+    private $numeroConselho;
+    private $tipoConselho;
+    private $estadoConselho;
     private $especialidade;
 
 
@@ -28,7 +30,7 @@ class Pessoa
      * @param $dataNascimento
      * @param $telefone
      */
-    public function __construct($id, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco, $crm, $especialidade)
+    public function __construct($id, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, $especialidade)
     {
         $this->id = $id;
         $this->nome = $nome;
@@ -37,8 +39,11 @@ class Pessoa
         $this->dataNascimento = $dataNascimento;
         $this->telefone = $telefone;
         $this->endereco = $endereco;
-        $this->crm = $crm;
+        $this->numeroConselho = $numeroConselho;
+        $this->tipoConselho = $tipoConselho;
+        $this->estadoConselho = $estadoConselho;
         $this->especialidade = $especialidade;
+
     }
 
     public function getId()
@@ -114,18 +119,28 @@ class Pessoa
     /**
      * @return mixed
      */
-    public function getCrm()
+    public function getNumeroConselho()
     {
-        return $this->crm;
+        return $this->numeroConselho;
     }
 
     /**
-     * @param mixed $crm
+     * @return mixed
      */
-    public function setCrm($crm): void
+    public function getTipoConselho()
     {
-        $this->crm = $crm;
+        return $this->tipoConselho;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getEstadoConselho()
+    {
+        return $this->estadoConselho;
+    }
+
+
 
     /**
      * @return mixed

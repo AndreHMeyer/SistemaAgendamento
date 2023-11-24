@@ -512,16 +512,15 @@ if (!isset($_SESSION['usuario'])) {
             success: function(response) {
                 var data = response.response;
 
-                const dataNascimentoFormatada = data.data_nascimento; //formatDate(data.data_nascimento);
-
+                // const dataNascimentoFormatada = formatDate(data.data_nascimento);
                 $('#nomeProf').val(data.nome);
                 $('#cpfProf').val(data.cpf);
-                $('#dataNascimentoProf').val(dataNascimentoFormatada);
+                $('#dataNascimentoProf').val(data.data_nascimento);
                 $('#telefoneProf').val(data.telefone);
                 $('#emailProf').val(data.email);
-                $('#crm').val(data.crm);
-                $('#conselhoProf').val(data.conselho);
-                $('#crm-estado').val(data.crm_estado);
+                $('#crm').val(data.numero_conselho);
+                $('#conselhoProf').val(data.tipo_conselho);
+                $('#crm-estado').val(data.estado_conselho);
                 $('#enderecoProf').val(data.endereco);
 
                 $('#modalProfissional').modal('show');
@@ -529,6 +528,7 @@ if (!isset($_SESSION['usuario'])) {
                 $('#BtnEditar').on('click', function() {
 
                     const dadosAlterados = {
+                        id: id_profissional,
                         nome: $('#nomeProf').val(),
                         cpf: $('#cpfProf').val(),
                         data_nascimento: $('#dataNascimentoProf').val(),

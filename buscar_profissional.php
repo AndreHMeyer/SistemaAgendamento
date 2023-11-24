@@ -8,22 +8,38 @@ $id_profissional = isset($_REQUEST['id_profissional']) ? $_REQUEST['id_profissio
 
 $repositorioProfissionais = new \Database\RepositorioPessoas();
 
+$profissionais = [];
+
+
+
 if (!empty($id_profissional)) {
-    $profissionais = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
+    $profissional = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
+
+    $pessoa = array(
+        'nome' => $profissional->getNome(),
+        "email" => $profissional->getEmail(),
+        "especialidade" => $profissional->getEspecialidade(),
+        "cpf" => $profissional->getCpf(),
+        "data_nascimento" =>$profissional->getDataNascimento(),
+        "telefone" => $profissional->getTelefone(),
+        "numero_conselho" => $profissional->getNumeroConselho(),
+        "tipo_conselho" => $profissional->getTipoConselho(),
+        "estado_conselho" => $profissional->getEstadoConselho(),
+        "endereco" => $profissional->getEndereco()
+
+    );
 
 } else {
     $profissionais = $repositorioProfissionais->obterTodosProfissionais();
-}
 
-$ies_situacao = "Ativo";
-if ($profissionais) {
-    foreach ($profissionais as $profissional) {
-        $idProfissional = $profissional->getId();
-        $nomeCompleto = $profissional->getNome();
+    if ($profissionais) {
+        foreach ($profissionais as $profissional) {
+            $idProfissional = $profissional->getId();
+            $nomeCompleto = $profissional->getNome();
 
-        $exploNome = explode(' ', $nomeCompleto);
-        $firstLeterName = substr($exploNome[0], 0, 1);
-        $firstLeterMidle = substr(end($exploNome), 0, 1);
+            $exploNome = explode(' ', $nomeCompleto);
+            $firstLeterName = substr($exploNome[0], 0, 1);
+            $firstLeterMidle = substr(end($exploNome), 0, 1);
 
 //        if ($idProfissional == 2) {
 //            $ies_situacao = "Inativo";
@@ -44,36 +60,26 @@ if ($profissionais) {
 //        }
 
 
-        $pessoa[$idProfissional] = array(
-            "iniciais_nome" => $firstLeterName . $firstLeterMidle,
-            'nome' => $nomeCompleto,
-            "email" => $profissional->getEmail(),
-            "especialidade" => $profissional->getEspecialidade(),
-            "cpf" => $profissional->getCpf(),
-            "data_nascimento" =>$profissional->getDataNascimento(),
-            "telefone" => $profissional->getTelefone(),
-            "crm" => $profissional->getCrm(),
-            "endereco" => $profissional->getEndereco()
+            $pessoa[$idProfissional] = array(
+                "iniciais_nome" => $firstLeterName . $firstLeterMidle,
+                'nome' => $nomeCompleto,
+                "email" => $profissional->getEmail(),
+                "especialidade" => $profissional->getEspecialidade(),
+                "cpf" => $profissional->getCpf(),
+                "data_nascimento" =>$profissional->getDataNascimento(),
+                "telefone" => $profissional->getTelefone(),
+                "crm" => $profissional->getNumeroConselho(),
+                "endereco" => $profissional->getEndereco()
 
-        );
+            );
+        }
+
+
     }
 
 
-    echo json_encode(["response" => $pessoa]);
-} else {
-    $pessoa = array(
-        'nome' => "Rúbia Roberta",
-        "cpf" => '126.160.809.74',
-        "data_nascimento" => "26/11/2023",
-        "telefone" => '4823847230',
-        "email" => 'rubia@teste.hsadhasd',
-        "crm" => '35356',
-        "conselho" => 'TESTE',
-        "crm_estado" => 'SC',
-        "endereco" => 'Rua Aldhemar Veiga'
 
-    );
 
-    echo json_encode(["response" => $pessoa]);
 }
 
+echo json_encode(["response" => $pessoa]);
