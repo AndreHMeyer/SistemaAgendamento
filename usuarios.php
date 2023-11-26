@@ -200,7 +200,7 @@ if (!isset($_SESSION['usuario'])) {
                 <tr>
                     <th scope="col"></th>
                     <th scope="col" class="sortable">Nome <i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable">Telefone<i class="fas fa-sort"></i></th>
+<!--                    <th scope="col" class="sortable">Telefone<i class="fas fa-sort"></i></th>-->
                     <th scope="col" class="sortable" style="width: 250px;">E-mail<i class="fas fa-sort"></i></th>
                     <th scope="col"></th>
 
@@ -224,21 +224,18 @@ if (!isset($_SESSION['usuario'])) {
                 <div class="modal-body">
                     <form id="form_usuario">
                         <div class="form-group">
-                            <label for="nomeUser">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nomeUser" name="nomeUser" placeholder="Nome Sobrenome" required>
-                        </div>
-                        <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefoneUser" name="telefoneUser" placeholder="(99)9 9999-1234" required>
-                                </div>
-                                <div class="col">
                                     <label for="emailUser">E-mail</label>
-                                    <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="nome@email.com" required>
+                                    <input type="email" class="form-control col-sm-12" id="emailUser" name="emailUser" placeholder="nome@email.com" required>
+                                </div>
+                                <div clas="col">
+                                    <label for="nomeUser">Nome usuário</label>
+                                    <input type="text" class="form-control" id="nomeUser" name="nomeUser" placeholder="Nome usuário" required>
                                 </div>
                             </div>
                         </div>
+
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col" id="senha_um">
@@ -468,9 +465,7 @@ if (!isset($_SESSION['usuario'])) {
                         <span class="iniciais">${usuarios.iniciais_nome}</span>
                         <span style="margin-left: 10px;">${usuarios.nome}</span><br/>   
                     </td>
-                    <td class="info-text" style="vertical-align: middle;">
-                        <span class="td_telefone">${usuarios.telefone}</span>
-                    </td>
+
                     <td style="vertical-align: middle;">${usuarios.email}</td>
                     
                     <td class="icon" style="vertical-align: middle;">
@@ -500,7 +495,6 @@ if (!isset($_SESSION['usuario'])) {
                 $('#senhaUser, #rep_senhaUser').removeClass('is-invalid');
 
                 let nomeUsuario = $('#nomeUser').val();
-                let telefone = $('#telefoneUser').val();
                 let email = $('#emailUser').val();
                 let senha = $('#senhaUser').val();
 
@@ -511,7 +505,6 @@ if (!isset($_SESSION['usuario'])) {
                     dataType: 'json',
                     data: {
                         nomeUsuario: nomeUsuario,
-                        telefone: telefone,
                         email: email,
                         senha: senha
                     },
@@ -555,7 +548,7 @@ if (!isset($_SESSION['usuario'])) {
         $('#BtnEditar').show();
         $('#BtnCadastro').hide();
 
-        $('#senha_um, #senha_dois').hide();
+        $('#senha_um, #senha_dois').show();
         $('#senhaUser, #rep_senhaUser').prop('required', false);
 
         const url = "../SistemaAgendamento/buscar_usuarios.php";
@@ -571,7 +564,7 @@ if (!isset($_SESSION['usuario'])) {
                 $('#nomeUser').val(data.nome);
                 $('#telefoneUser').val(data.telefone);
                 $('#emailUser').val(data.email);
-
+                $('#senha_um, #senha_dois').show();
                 $('#modalUsuario').modal('show');
 
                 $('#BtnEditar').on('click', function() {
@@ -579,8 +572,9 @@ if (!isset($_SESSION['usuario'])) {
                     const dadosAlterados = {
                         id: id_usuario,
                         nomeUsuario: $('#nomeUser').val(),
-                        telefone: $('#telefoneUser').val(),
-                        email: $('#emailUser').val()
+                        email: $('#emailUser').val(),
+                        senha: $('#senhaUser').val()
+
                     };
 
                     editar(dadosAlterados);
@@ -602,6 +596,10 @@ if (!isset($_SESSION['usuario'])) {
                 data: dados,
                 success: function(response) {
                     if (response.success) {
+                        $('#mensagemDoModal').text(response.message);
+                        $('.modal-title-response').text('Sucesso!!');
+                        $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
+                        $('#modalResponse').modal('show');
                         $('#modalUsuario').modal('hide');
                         document.getElementById('form_usuario').reset();
                         location.reload();

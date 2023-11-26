@@ -15,12 +15,20 @@ class Usuario
     private $senhaHash;
     private $email;
 
-    public function __construct(string $nomeUsuario, string $senha, string $email)
+    /**
+     * @param $id
+     * @param $nomeUsuario
+     * @param $senhaHash
+     * @param $email
+     */
+    public function __construct($id, $nomeUsuario, $senhaHash, $email)
     {
-        $this->setNomeUsuario($nomeUsuario);
-        $this->setSenha($senha);
-        $this->setEmail($email);
+        $this->id = $id;
+        $this->nomeUsuario = $nomeUsuario;
+        $this->senhaHash = $senhaHash;
+        $this->email = $email;
     }
+
 
     public function getId(): int
     {
@@ -54,7 +62,7 @@ class Usuario
 
     public function setSenha(string $senha): void
     {
-        $this->senhaHash = password_hash($senha, PASSWORD_DEFAULT);
+        $this->senhaHash = $senha;
     }
 
     public function setEmail(string $email): void
@@ -62,10 +70,8 @@ class Usuario
         $this->email = $email;
     }
 
-    public function verificarSenha(string $senha): bool
-    {
-        return password_verify($senha, $this->senhaHash);
-    }
+
+
 }
 
 

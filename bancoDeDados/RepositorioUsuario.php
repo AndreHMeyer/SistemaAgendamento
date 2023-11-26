@@ -72,6 +72,9 @@ class RepositorioUsuario
     {
         // Verifica se o email existe
         $email = mysqli_real_escape_string($this->conexao, trim($usuario->getEmail()));
+        $nomeUsuario = mysqli_real_escape_string($this->conexao, trim($usuario->getNomeUsuario()));
+        $senha = mysqli_real_escape_string($this->conexao, $usuario->getSenha());
+
         $sql = "SELECT COUNT(*) AS total FROM usuario WHERE email = ?";
         $stmt = mysqli_prepare($this->conexao, $sql);
         mysqli_stmt_bind_param($stmt, "s", $email);
@@ -79,25 +82,27 @@ class RepositorioUsuario
         $result = mysqli_stmt_get_result($stmt);
         $row = mysqli_fetch_assoc($result);
 
-        if ($row['total'] >= 1) {
-            $_SESSION['email_existe'] = true;
-            header('Location: Cadastro.php');
-            exit;
-        }
+//        if ($row['total'] >= 1) {
+//            $_SESSION['email_existe'] = true;
+//            header('Location: Cadastro.php');
+//            exit;
+//        }
 
         // Hash da senha
-        $senhaHash = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
+//        $senhaHash = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
         $sql = "INSERT INTO usuario (nomeUsuario, email, senha) VALUES (?, ?, ?)";
         $stmt = mysqli_prepare($this->conexao, $sql);
-        mysqli_stmt_bind_param($stmt, "sss", $usuario->getNomeUsuario(), $email, $senhaHash);
+        mysqli_stmt_bind_param($stmt, "sss", $nomeUsuario, $email, $senha);
 
         if (mysqli_stmt_execute($stmt)) {
-            $_SESSION['status_cadastro'] = true;
-            $_SESSION['cadastro_sucesso'] = true;
+//            $_SESSION['status_cadastro'] = true;
+//            $_SESSION['cadastro_sucesso'] = true;
+            return true;
         } else {
-            $_SESSION['status_cadastro'] = false;
-            throw new \Exception("Erro ao cadastrar: " . mysqli_error($this->conexao));
+            return false;
+//            $_SESSION['status_cadastro'] = false;
+//            throw new \Exception("Erro ao cadastrar: " . mysqli_error($this->conexao));
         }
 
         mysqli_stmt_close($stmt);
@@ -133,14 +138,11 @@ class RepositorioUsuario
         $stmt->bind_param('ssss', $nomeUsuario, $email, $senha, $id);
 
         if ($stmt->execute()) {
-            echo 'Usuário atualizado com sucesso!' . PHP_EOL;
             return true;
         } else {
-            echo 'Houve um erro ao atualizar o cadastro do usuário' . PHP_EOL;
             return false;
         }
     } else {
-        echo 'Usuário não encontrado!' . PHP_EOL;
         return false;
     }
 }
