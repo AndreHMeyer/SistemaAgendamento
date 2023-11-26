@@ -36,7 +36,7 @@ if (!isset($_SESSION['usuario'])) {
         margin-left: 80px;
     }
 
-    .add-usuario {
+    .add-paciente {
         margin-left: 40px;
         margin-top: 80px;
         background-color: #5272E9 !important;
@@ -155,7 +155,7 @@ if (!isset($_SESSION['usuario'])) {
     <div id="nav-lateral"></div>
 
     <div class="d-flex align-items-center">
-        <h2 class="title" style="font-weight: bold;">Usuários</h2>
+        <h2 class="title" style="font-weight: bold;">Pacientes</h2>
         <div class="search-container">
             <div class="input-group">
                 <input type="text" class="form-control search-bar" style="width: 800px;" id="searchInput">
@@ -172,7 +172,7 @@ if (!isset($_SESSION['usuario'])) {
                 <ul id="searchResults" class="list-group" style="position: absolute; width: 800px; margin-top:38px;"></ul>
             </div>
         </div>
-        <button class="btn add-usuario" type="button" onclick="abrirModal();"> +
+        <button class="btn add-paciente" type="button" onclick="abrirModal();"> +
             Adicionar </button>
     </div>
 
@@ -194,71 +194,73 @@ if (!isset($_SESSION['usuario'])) {
             </tbody>
         </table>
     </div>
+    </div>
 
-    <div id="modalUsuario" class="modal fade" aria-labelledby="modalUsuario">
+
+    <div class="modal fade" id="modalPaciente">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"> <img src="img/person_icon.png" id="profissional-image" class="ml-2" width="30px;"> <span id="usuario-text"></span> Usuário</h5>
+                    <h5 class="modal-title"> <img src="img/person_icon.png" id="paciente-image" class="ml-2" width="30px;"> <span id="paciente-text"></span> Paciente</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="form_usuario">
-                        <div class="form-group">
-                            <label for="nomeUser">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nomeUser" name="nomeUser" placeholder="Nome Sobrenome" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefoneUser" name="telefoneUser" placeholder="(99)9 9999-1234" required>
-                                </div>
-                                <div class="col">
-                                    <label for="emailUser">E-mail</label>
-                                    <input type="email" class="form-control" id="emailUser" name="emailUser" placeholder="nome@email.com" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col" id="senha_um">
-                                    <label for="senhaUser">Senha</label>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control" id="senhaUser" name="senhaUser" placeholder="exempl@Senha123" required>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" style="color: #989898; border-color: #BEBEBE;" type="button" id="mostrarSenhaUser">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div id="senhaError" class="text-danger"></div>
-                                </div>
-                                <div class="col" style="margin-bottom: 30px;" id="senha_dois">
-                                    <label for="rep_senhaUser">Repita a Senha</label>
-                                    <div class="input-group">
-                                        <input type="password" class="form-control" id="rep_senhaUser" name="rep_senhaUser" placeholder="exempl@Senha123" required>
-                                        <div class="input-group-append">
-                                            <button class="btn btn-outline-secondary" style="color: #989898; border-color: #BEBEBE;" type="button" id="mostrarRepSenha">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="input-group mb-3">
 
-                            <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
-                            <button type="submit" class="btn btn-primary" id="BtnCadastro" onclick="cadastrarUsuario();" style="margin-top: 5px;float: right">Salvar</button>
-                            <button type="submit" class="btn btn-primary" id="BtnEditar" style="margin-top: 5px;float: right">Salvar</button>
-                            <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: right; color: red; margin-right: 30px;" data-dismiss="modal">Cancelar</button>
+                    </div>
+                    <form id="form_paciente">
+                        <div class="form-group">
+                            <label for="nomePac">Nome</label>
+                            <input type="text" class="form-control col-sm-12" id="nomePac" name="nomePac" placeholder="Nome Sobrenome" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="cpfPac">CPF</label>
+                                    <input type="text" class="form-control" id="cpfPac" name="cpfPac" placeholder="123.456.789-10" required>
+                                </div>
+                                <div class="col">
+                                    <label for="dataNascimentoPac">Data de Nascimento</label>
+                                    <input type="date" class="form-control" id="dataNascimentoPac" name="dataNascimentoPac" placeholder="" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="telefonePac">Telefone</label>
+                                    <input type="text" class="form-control" id="telefonePac" name="telefonePac" placeholder="(99)9 9999-1234" required>
+                                </div>
+                                <div class="col">
+                                    <label for="emailPac">E-mail</label>
+                                    <input type="email" class="form-control" id="emailPac" name="emailPac" placeholder="nome@email.com" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="enderecoPac">Endereço</label>
+                                    <input type="text" class="form-control" id="enderecoPac" name="enderecoPac" placeholder="Rua 123, número 456" required>
+                                </div>
+                                <!-- <div class="col">
+                                    <label for="cep">CEP</label>
+                                    <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" required>
+                                </div> -->
+                            </div>
+                        </div>
+                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
+                        <button type="submit" class="btn btn-primary" id="BtnCadastro" onclick="cadastrarPaciente();" style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="submit" class="btn btn-primary" id="BtnEditar" style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: right; color: red; margin-right: 30px;" data-dismiss="modal">Cancelar</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    </div>
+
 
 
     <div class="modal modalResponse" id="modalResponse" tabindex="-1" role="dialog">
@@ -310,7 +312,7 @@ if (!isset($_SESSION['usuario'])) {
 </body>
 <script>
     function abrirModal() {
-        $('#modalUsuario').modal('show')
+        $('#modalPaciente').modal('show')
     }
 
     $(document).ready(function() {
@@ -352,7 +354,7 @@ if (!isset($_SESSION['usuario'])) {
             var searchTerm = $(this).val();
             $('#searchResults').show();
 
-            filtrarUsuario(searchTerm);
+            filtrarPaciente(searchTerm);
         });
 
         campoPesquisa.on('blur', function() {
@@ -360,9 +362,9 @@ if (!isset($_SESSION['usuario'])) {
         });
 
 
-        function filtrarUsuario(campo_pesquisa) {
+        function filtrarPaciente(campo_pesquisa) {
             $.ajax({
-                url: './controller/filtrar_usuario.php',
+                url: './controller/filtrar_paciente.php',
                 method: 'POST',
                 data: {
                     campo_pesquisa: campo_pesquisa
@@ -390,12 +392,12 @@ if (!isset($_SESSION['usuario'])) {
             var searchResultsList = $('#searchResults');
             searchResultsList.empty();
 
-            Object.values(sugestoes).forEach(function(usuario) {
+            Object.values(sugestoes).forEach(function(paciente) {
                 var listItem = $('<li class="list-group-item"></li>');
-                listItem.text(usuario.nome);
+                listItem.text(paciente.nome);
 
                 listItem.click(function() {
-                    $('.search-bar').val(usuario.nome);
+                    $('.search-bar').val(paciente.nome);
                     searchResultsList.empty();
                 });
 
@@ -407,7 +409,7 @@ if (!isset($_SESSION['usuario'])) {
 
     function buscarInfoTableFiltro(campoPesquisa) {
         $.ajax({
-            url: '../SistemaAgendamento/buscar_usuarios.php',
+            url: '../SistemaAgendamento/buscar_pacientes.php',
             type: 'POST',
             data: {
                 campoPesquisa: campoPesquisa
@@ -427,7 +429,7 @@ if (!isset($_SESSION['usuario'])) {
 
     function buscaInfoTable() {
         $.ajax({
-            url: '../SistemaAgendamento/buscar_usuarios.php',
+            url: '../SistemaAgendamento/buscar_pacientes.php',
             success: function(response) {
                 createTable(response);
             }
@@ -439,7 +441,7 @@ if (!isset($_SESSION['usuario'])) {
         table.innerHTML = '';
         for (const key in data.response) {
             if (data.response.hasOwnProperty(key)) {
-                const usuarios = data.response[key];
+                const pacientes = data.response[key];
                 const row = document.createElement('tr');
 
                 row.classList.add('tr-profissional');
@@ -448,18 +450,19 @@ if (!isset($_SESSION['usuario'])) {
                     <td style="vertical-align: middle;"></td>
                     
                     <td style="display: flex; align-items: center;">
-                        <span class="iniciais">${usuarios.iniciais_nome}</span>
-                        <span style="margin-left: 10px;">${usuarios.nome}</span><br/>   
+                        <span class="iniciais">${pacientes.iniciais_nome}</span>
+                        <span style="margin-top: 5px;">${pacientes.nome} <br/> ${pacientes.cpf} </span>
                     </td>
-                    <td style="vertical-align: middle;">${usuarios.email}</td>
                     <td class="info-text" style="vertical-align: middle;">
-                        <span class="td_telefone">${usuarios.telefone}</span>
+                        <span class="td_telefone">${pacientes.telefone}</span>
                     </td>
-                    <td style="vertical-align: middle; text-align:center;">${usuarios.ultima_consulta}</td>
+                    <td style="vertical-align: middle;">${pacientes.email}</td>
+                    
+                    <td style="vertical-align: middle; text-align:center;">${pacientes.ultima_consulta}</td>
                     <td class="icon" style="vertical-align: middle;">
                         <div class="icon-container">
-                            <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalUsuario" onClick=buscarDadosEdicao("${key}")></span>
-                            <span><img src="img/icon_lixeira.png" onclick="excluir('${usuarios.nome}', ${key})"></span>
+                            <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalPaciente" onClick=buscarDadosEdicao("${key}")></span>
+                            <span><img src="img/icon_lixeira.png" onclick="excluir('${pacientes.nome}', ${key})"></span>
                         </div>
                     </td>`;
 
@@ -468,102 +471,111 @@ if (!isset($_SESSION['usuario'])) {
         }
     }
 
-    function cadastrarUsuario() {
-        $('#form_usuario').on('submit', function(event) {
+    function cadastrarPaciente() {
+        $('#form_paciente').on('submit', function(event) {
             event.preventDefault();
 
-            var senha = $('#senhaUser').val();
-            var repSenha = $('#rep_senhaUser').val();
-
-            if (senha !== repSenha) {
-                $('#senhaError').text('As senhas não coincidem.');
-                $('#senhaUser, #rep_senhaUser').addClass('is-invalid');
-            } else {
-                $('#senhaError').text('');
-                $('#senhaUser, #rep_senhaUser').removeClass('is-invalid');
-
-                let nomeUsuario = $('#nomeUser').val();
-                let telefone = $('#telefoneUser').val();
-                let email = $('#emailUser').val();
-                let senha = $('#senhaUser').val();
+            let nome = $('#nomePac').val();
+            let cpf = $('#cpfPac').val();
+            let data_nascimento = $('#dataNascimentoPac').val();
+            let telefone = $('#telefonePac').val();
+            let email = $('#emailPac').val();
+            let endereco = $('#enderecoPac').val();
 
 
-                $.ajax({
-                    url: "./controller/cadastrarUsuario.php",
-                    method: "POST",
-                    dataType: 'json',
-                    data: {
-                        nomeUsuario: nomeUsuario,
-                        telefone: telefone,
-                        email: email,
-                        senha: senha
-                    },
-                    success: function(response) {
+            $.ajax({
+                url: "./controller/cadastrarPaciente.php",
+                method: "POST",
+                dataType: 'json',
+                data: {
+                    nome: nome,
+                    cpf: cpf,
+                    data_nascimento: data_nascimento,
+                    telefone: telefone,
+                    email: email,
+                    endereco: endereco
+                },
+                success: function(response) {
 
-                        if (response && response.success) {
-                            $('#modalUsuario').modal('hide');
-                            document.getElementById('form_usuario').reset();
-                            $('#mensagemDoModal').text(response.message);
-                            $('.modal-title-response').text('Sucesso!!');
-                            $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
-                            $('#modalResponse').modal('show');
-                            $('#modalResponse .modal-footer .btn-primary').on('click', function() {
-                                location.reload(true);
-                            });
+                    if (response && response.success) {
+                        $('#modalPaciente').modal('hide');
+                        document.getElementById('form_paciente').reset();
+                        $('#mensagemDoModal').text(response.message);
+                        $('.modal-title-response').text('Sucesso!!');
+                        $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
+                        $('#modalResponse').modal('show');
+                        $('#modalResponse .modal-footer .btn-primary').on('click', function() {
+                            location.reload(true);
+                        });
 
-                        } else {
-                            $('.modal-title-response').text('Mensagem de Erro');
-                            $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
-                            $('#mensagemDoModal').text(response.message);
-                            $('#modalResponse').modal('show');
-                        }
-                    },
-                    error: function(xhr, status, error) {
+                    } else {
                         $('.modal-title-response').text('Mensagem de Erro');
                         $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
-                        $('#mensagemDoModal').text(error);
+                        $('#mensagemDoModal').text(response.message);
                         $('#modalResponse').modal('show');
                     }
-                });
-            }
+                },
+                error: function(xhr, status, error) {
+                    $('.modal-title-response').text('Mensagem de Erro');
+                    $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
+                    $('#mensagemDoModal').text(error);
+                    $('#modalResponse').modal('show');
+                }
+            });
+
+
+
         });
+    }
+
+    function formatDate(data) {
+        const partes = data.split('/');
+        if (partes.length === 3) {
+            // Reorganize as partes para o formato aaaa-mm-dd
+            return `${partes[2]}-${partes[1]}-${partes[0]}`;
+        }
+        return data; // Retorne a data no formato original se não for possível formatar
     }
 
 
     function buscarDadosEdicao(id) {
-        let id_usuario = id;
+        let id_paciente = id;
 
-        $('#usuario-text').text('Editar');
+        $('#paciente-text').text('Editar');
 
         $('#BtnEditar').show();
         $('#BtnCadastro').hide();
 
-        $('#senha_um, #senha_dois').hide();
-        $('#senhaUser, #rep_senhaUser').prop('required', false);
-
-        const url = "../SistemaAgendamento/buscar_usuarios.php";
+        const url = "../SistemaAgendamento/buscar_pacientes.php";
 
         $.ajax({
             url: url,
             data: {
-                id_usuario: id_usuario
+                id_paciente: id_paciente
             },
             success: function(response) {
                 var data = response.response;
+                const dataNasciemnto = formatDate(data.data_nascimento);
 
-                $('#nomeUser').val(data.nome);
-                $('#telefoneUser').val(data.telefone);
-                $('#emailUser').val(data.email);
+                $('#nomePac').val(data.nome);
+                $('#cpfPac').val(data.cpf);
+                $('#dataNascimentoPac').val(dataNasciemnto);
+                $('#telefonePac').val(data.telefone);
+                $('#emailPac').val(data.email);
+                $('#enderecoPac').val(data.endereco);
 
-                $('#modalUsuario').modal('show');
+                $('#modalPaciente').modal('show');
 
                 $('#BtnEditar').on('click', function() {
 
                     const dadosAlterados = {
-                        id: id_usuario,
-                        nomeUsuario: $('#nomeUser').val();
-                        telefone: $('#telefoneUser').val();
-                        email: $('#emailUser').val();
+                        id: id_paciente,
+                        nome: $('#nomePac').val(),
+                        cpf: $('#cpfPac').val(),
+                        data_nascimento: $('#dataNascimentoPac').val(),
+                        telefone: $('#telefonePac').val(),
+                        email: $('#emailPac').val(),
+                        endereco: $('#enderecoPac').val()
                     };
 
                     editar(dadosAlterados);
@@ -575,18 +587,18 @@ if (!isset($_SESSION['usuario'])) {
 
 
     function editar(dados) {
-        $('#form_usuario').on('submit', function(event) {
+        $('#form_paciente').on('submit', function(event) {
             event.preventDefault();
 
             $.ajax({
-                url: "./controller/editarUsuario.php",
+                url: "./controller/editarPaciente.php",
                 method: "POST",
                 dataType: 'json',
                 data: dados,
                 success: function(response) {
                     if (response.success) {
-                        $('#modalUsuario').modal('hide');
-                        document.getElementById('form_usuario').reset();
+                        $('#modalPaciente').modal('hide');
+                        document.getElementById('form_paciente').reset();
                         location.reload();
                     } else {
                         $('.modal-title-response').text('Mensagem de Erro');
@@ -605,23 +617,23 @@ if (!isset($_SESSION['usuario'])) {
         });
     }
 
-    function excluir(den_usuario, id_usuario) {
-        var den_usuario = den_usuario;
-        var id_usuario = id_usuario;
+    function excluir(den_paciente, id_paciente) {
+        var den_paciente = den_paciente;
+        var id_paciente = id_paciente;
 
         $('#modalExcluir').modal('show');
-        $('#mensagemDeExclusao').html("Deseja excluir o cadastro do usuário <b>" + den_usuario + "</b> ?");
+        $('#mensagemDeExclusao').html("Deseja excluir o cadastro do usuário <b>" + den_paciente + "</b> ?");
 
         $('#modalExcluir .modal-footer .btn-primary').on('click', function() {
 
             $('#modalExcluir').modal('hide');
 
             $.ajax({
-                url: "./controller/excluirUsuario.php",
+                url: "./controller/excluirPaciente.php",
                 method: 'POST',
                 dataType: 'json',
                 data: {
-                    id_usuario: id_usuario
+                    id_paciente: id_paciente
                 },
                 success: function(response) {
                     if (response && response.success) {
@@ -654,23 +666,21 @@ if (!isset($_SESSION['usuario'])) {
 
     document.addEventListener('DOMContentLoaded', function() {
 
-        $('.add-usuario').on('click', function() {
-            $('#usuario-text').text('Cadastrar');
+        $('.add-paciente').on('click', function() {
+            $('#paciente-text').text('Cadastrar');
             $('#BtnEditar').hide();
             $('#BtnCadastro').show();
-            $('#senha_um, #senha_dois').show();
-            $('#senhaUser, #rep_senhaUser').prop('required', true);
-            document.getElementById('form_usuario').reset();
+            document.getElementById('form_paciente').reset();
         });
 
-        $('#BtnCadastroUsuario').on('click', function(event) {
-            $('#form_usuario').on('submit', function(event) {
+        $('#BntCadastroPaciente').on('click', function(event) {
+            $('#form_paciente').on('submit', function(event) {
                 event.preventDefault();
             });
         });
 
         $('.modal-cancelar-excluir').on('click', function(event) {
-            document.getElementById('form_usuario').reset();
+            document.getElementById('form_paciente').reset();
         });
 
         buscaInfoTable();
