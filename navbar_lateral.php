@@ -52,7 +52,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
         </nav>
         <ul class="nav nav-pills nav-flush flex-column mb-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link " title="Pacientes" data-toggle="modal" data-target="#paciente">
+                <a href="pacientes.php" class="nav-link " title="Pacientes">
                     <img width="35" src="img/user_icon.png" alt="Icone de Usuário">
                     <span class="item-name">Pacientes</span>
                 </a>
@@ -86,69 +86,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
             </li>
         </ul>
     </div>
-    <div class="modal fade" id="paciente">
-        <div class="modal-dialog modal-lg " role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cadastrar Paciente</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-
-                    </div>
-                    <form id="formCliente">
-
-                        <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nome" name="nome" placeholder="Nome Sobrenome" required>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="cpf">CPF</label>
-                                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="123.456.789-10" required>
-                                </div>
-                                <div class="col">
-                                    <label for="dataNascimento">Data de Nascimento</label>
-                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" placeholder="" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefone" name="telefone" placeholder="(99)9 9999-1234" required>
-                                </div>
-                                <div class="col">
-                                    <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="nome@email.com" required>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="endereco">Endereço</label>
-                                    <input type="text" class="form-control" id="endereco" name="endereco" placeholder="Rua 123, número 456" required>
-                                </div>
-                                <!-- <div class="col">
-                                    <label for="cep">CEP</label>
-                                    <input type="text" class="form-control" id="cep" name="cep" placeholder="00000-000" required>
-                                </div> -->
-                            </div>
-                        </div>
-                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: left; color: red;">Excluir</button>
-                        <button type="submit" class="btn btn-primary" style="margin-top: 5px;float: right" id="BtnCadastroCliente">Salvar</button>
-                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <div class="modal fade" id="profissional">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
