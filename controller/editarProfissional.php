@@ -16,11 +16,11 @@ $numeroConselho = $_POST['crm'];
 $tipoConselho = $_POST['conselho'];
 $estadoConselho = $_POST['crm_estado'];
 $endereco = $_POST['endereco'];
-//$especialidade = $_POST['especialidade']; PRECISA ADD NO FORM DE EDIÇÃO DE PROFISSIONAL
+$especialidade = $_POST['especialidade'];
 
 
 $repo = new RepositorioPessoas();
-$pessoaUpdate = new Pessoa($id, $nome, $email, $cpf, $data_nascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, null);
+$pessoaUpdate = new Pessoa($id, $nome, $email, $cpf, $data_nascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, $especialidade);
 
 $status = $repo->updatePessoa($pessoaUpdate);
 
