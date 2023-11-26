@@ -38,7 +38,11 @@ class RepositorioPessoas
                 $row['cpf'],
                 $row['dataNascimento'],
                 $row['telefone'],
-                $row['endereco']
+                $row['endereco'],
+                null,
+                null,
+                null,
+                null
             );
 
             return $pessoa;
@@ -73,7 +77,11 @@ class RepositorioPessoas
                     $row['telefone'],
                     $row['endereco'],
                     $row['crm'],
-                    $row['especialidade']
+                    $row['especialidade'],
+                    null,
+                    null,
+                    null,
+                    null
 
                 );
             }
@@ -209,7 +217,9 @@ class RepositorioPessoas
         $numeroConselho = $pessoa->getNumeroConselho();
         $tipoConselho = $pessoa->getTipoConselho();
         $estadoConselho = $pessoa->getEstadoConselho();
-        $especialidade = '';
+        $especialidade = $pessoa->getEspecialidade();
+
+
 
         $insertSQL = "INSERT INTO PESSOA (nome, email, cpf, dataNascimento, telefone, endereco, numero_conselho, especialidade, tipo_conselho, estado_conselho) 
                                 values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -238,6 +248,7 @@ class RepositorioPessoas
         $numeroConselho = mysqli_real_escape_string($conexao, $pessoa->getNumeroConselho());
         $tipoConselho = mysqli_real_escape_string($conexao, $pessoa->getTipoConselho());
         $estadoConselho = mysqli_real_escape_string($conexao, $pessoa->getEstadoConselho());
+        $especialidade = mysqli_real_escape_string($conexao, $pessoa->getEspecialidade());
 
 
 
@@ -257,11 +268,13 @@ class RepositorioPessoas
                   endereco = ?,
                   numero_conselho = ?,
                   tipo_conselho = ?,
-                  estado_conselho = ?
+                  estado_conselho = ?,
+                  especialidade = ?
+                
                   WHERE ID = ?";
 
             $stmt = $conexao->prepare($updateSQL);
-            $stmt->bind_param('ssssssssss', $nome, $cpf,$email, $dataNascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, $id);
+            $stmt->bind_param('sssssssssss', $nome, $cpf,$email, $dataNascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, $especialidade, $id);
 
             if ($stmt->execute()) {
                 return true;

@@ -16,20 +16,22 @@ $numeroConselho = $_REQUEST['crm'];
 $tipoConselho = $_REQUEST['conselho'];
 $estadoConselho = $_REQUEST['crm_estado'];
 $endereco = $_REQUEST['endereco'];
-//$especialidade = $_REQUEST['especialidade']; precisa do campo no formulário
+$especialidade = $_REQUEST['especialidade'];
 
 
 $repoProfissionais = new RepositorioPessoas();
 
-$profissional = new Pessoa(null, $nome, $email, $cpf, $data_nascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, null);
-
-$sucesso = $repoProfissionais->inserirPessoa($profissional);
+$profissional = new Pessoa(null, $nome, $email, $cpf, $data_nascimento, $telefone, $endereco, $numeroConselho, $tipoConselho, $estadoConselho, $especialidade);
 
 
-if ($sucesso) {
+
+
+$success = $repoProfissionais->inserirPessoa($profissional);
+
+if ($success) {
     $response =  json_encode(['success' => true, 'message' => 'Profissional cadastrado com sucesso!']);
 } else {
-    $response =  json_encode(['success' => false, 'message' => 'Erro ao cadastrar profissional.']);
+    $response =  json_encode(['success' => false, 'message' => 'Erro: Esse CPJ já está cadastrado']);
 }
 
 echo $response;

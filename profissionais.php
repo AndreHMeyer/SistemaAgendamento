@@ -253,7 +253,8 @@ if (!isset($_SESSION['usuario'])) {
                             <div class="form-row">
                                 <div class="col">
                                     <label for="cpfProf">CPF</label>
-                                    <input type="text" class="form-control" id="cpfProf" name="cpfProf" placeholder="123.456.789-10" required>
+                                    <input type="text" class="form-control" id="cpfProf" name="cpfProf" maxlength="14" oninput="mascararCPF(this)" placeholder="123.456.789-10" required>
+
                                 </div>
                                 <div class="col">
                                     <label for="dataNascimento">Data de Nascimento</label>
@@ -277,7 +278,7 @@ if (!isset($_SESSION['usuario'])) {
                             <div class="form-row">
                                 <div class="col">
                                     <label for="crm">No. Conselho</label>
-                                    <input type="text" class="form-control" id="crm" name="crm" placeholder="123456" required>
+                                    <input type="text" class="form-control" id="crm" name="crm" maxlength="6" oninput="tratarNumeroConselho(this)" placeholder="123456" required>
                                 </div>
                                 <div class="col">
                                     <label for="conselho">Conselho</label>
@@ -292,10 +293,22 @@ if (!isset($_SESSION['usuario'])) {
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
+                                    <label for="especialidadeProf">Especialidade</label>
+                                    <input type="text" class="form-control" id="especialidadeProf" name="especialidadeProf" placeholder="Especialidade médica" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-row">
+                                <div class="col">
                                     <label for="enderecoProf">Endereço</label>
                                     <input type="text" class="form-control" id="enderecoProf" name="enderecoProf" placeholder="Rua 123, número 456" required>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="alert alert-danger" role="alert" id="cpfErrorMessage" style="display: none">
+                            O CPF informado é inválido. Corrija para continuar.
                         </div>
 
                         <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
@@ -449,6 +462,11 @@ if (!isset($_SESSION['usuario'])) {
             let conselho = $('#conselhoProf').val();
             let crm_estado = $('#crm-estado').val();
             let endereco = $('#enderecoProf').val();
+            let especialidade = $('#especialidadeProf').val();
+
+            if (!validarCPF(cpf)) {
+                return;
+            }
 
             $.ajax({
                 url: "./controller/cadastrarProfissional.php",
@@ -463,7 +481,8 @@ if (!isset($_SESSION['usuario'])) {
                     crm: crm,
                     conselho: conselho,
                     crm_estado: crm_estado,
-                    endereco: endereco
+                    endereco: endereco,
+                    especialidade: especialidade
                 },
                 success: function(response) {
 
@@ -475,7 +494,8 @@ if (!isset($_SESSION['usuario'])) {
                         $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
                         $('#modalResponse').modal('show');
                         $('#modalResponse .modal-footer .btn-primary').on('click', function() {
-                            location.reload(true);
+                            $('#modalResponse .modal-footer .btn-primary').off('click'); //prevenir envio multiplo
+                            location.reload();
                         });
 
                     } else {
@@ -524,6 +544,7 @@ if (!isset($_SESSION['usuario'])) {
                 $('#conselhoProf').val(data.tipo_conselho);
                 $('#crm-estado').val(data.estado_conselho);
                 $('#enderecoProf').val(data.endereco);
+                $('#especialidadeProf').val(data.especialidade);
 
                 $('#modalProfissional').modal('show');
 
@@ -539,7 +560,8 @@ if (!isset($_SESSION['usuario'])) {
                         crm: $('#crm').val(),
                         conselho: $('#conselhoProf').val(),
                         crm_estado: $('#crm-estado').val(),
-                        endereco: $('#enderecoProf').val()
+                        endereco: $('#enderecoProf').val(),
+                        especialidade: $('#especialidadeProf').val()
                     };
 
                     editar(dadosAlterados);
@@ -625,6 +647,98 @@ if (!isset($_SESSION['usuario'])) {
             });
         });
     }
+
+    function mascararCPF(campo) {
+            // Remove caracteres não numéricos
+            const cpfLimpo = campo.value.replace(/[^\d]/g, '');
+
+            // Limita o campo a 11 caracteres
+            if (cpfLimpo.length > 11) {
+                campo.value = cpfLimpo.slice(0, 11);
+            }
+
+            // Adiciona a máscara
+            if (cpfLimpo.length <= 3) {
+                campo.value = cpfLimpo;
+            } else if (cpfLimpo.length <= 6) {
+                campo.value = cpfLimpo.slice(0, 3) + '.' + cpfLimpo.slice(3);
+            } else if (cpfLimpo.length <= 9) {
+                campo.value = cpfLimpo.slice(0, 3) + '.' + cpfLimpo.slice(3, 6) + '.' + cpfLimpo.slice(6);
+            } else {
+                campo.value = cpfLimpo.slice(0, 3) + '.' + cpfLimpo.slice(3, 6) + '.' + cpfLimpo.slice(6, 9) + '-' +
+                    '' +
+                    '' + cpfLimpo.slice(9);
+            }
+    }
+
+    function tratarNumeroConselho(campo) {
+        //Permite somente numeros
+        const numeroConselhoLimpo = campo.value.replace(/[^\d]/g, '');
+        campo.value = numeroConselhoLimpo;
+    }
+
+
+
+    function validarCPF(cpf) {
+        // Remove caracteres não numéricos
+        const cpfLimpo = cpf.replace(/[^\d]/g, '');
+        let validado = true;
+
+        // Verifica se o CPF possui 11 dígitos
+        if (cpfLimpo.length !== 11) {
+            validado = false;
+            // console.log('Nao tem 11 digitos');
+        }
+
+        // Verifica se todos os dígitos são iguais, o que torna o CPF inválido
+        if (/^(\d)\1+$/.test(cpfLimpo)) {
+            validado = false;
+            // console.log('Todos os numeros iguais');
+        }
+
+        // Calcula e verifica o primeiro dígito verificador
+        let soma = 0;
+        for (let i = 0; i < 9; i++) {
+            soma += parseInt(cpfLimpo.charAt(i)) * (10 - i);
+        }
+        let digito1 = 11 - (soma % 11);
+        if (digito1 > 9) {
+            digito1 = 0;
+        }
+        if (parseInt(cpfLimpo.charAt(9)) !== digito1) {
+            validado = false;
+            // console.log('Falho no digito 1 verificador');
+        }
+
+        // Calcula e verifica o segundo dígito verificador
+        soma = 0;
+        for (let i = 0; i < 10; i++) {
+            soma += parseInt(cpfLimpo.charAt(i)) * (11 - i);
+        }
+        let digito2 = 11 - (soma % 11);
+        if (digito2 > 9) {
+            digito2 = 0;
+        }
+        if (parseInt(cpfLimpo.charAt(10)) !== digito2) {
+            validado = false;
+            // console.log('Falhou no 2 digito verificador');
+        }
+
+        // Se todas as verificações passaram, o CPF é válido
+
+
+
+        if (!validado) {
+            document.querySelector("#cpfErrorMessage").style.display = "block";
+            return validado;
+        } else {
+            validado = true;
+            document.querySelector("#cpfErrorMessage").style.display = "none";
+            return validado;
+
+        }
+    }
+
 
 
 

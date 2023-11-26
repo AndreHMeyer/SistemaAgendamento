@@ -13,6 +13,7 @@ $profissionais = [];
 
 
 if (!empty($id_profissional)) {
+    //Obter um profissional
     $profissional = $repositorioProfissionais->obterProfissionalPorId($id_profissional);
 
     $pessoa = array(
@@ -30,6 +31,7 @@ if (!empty($id_profissional)) {
     );
 
 } else {
+    //Obtem todos os profissionais
     $profissionais = $repositorioProfissionais->obterTodosProfissionais();
 
     if ($profissionais) {
