@@ -19,10 +19,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sucesso = $repo->insertUsuario($novoUsuario);
 
     if ($sucesso) {
-        echo "Usuário cadastrado com sucesso!";
+        $response =  json_encode(['success' => true, 'message' => 'Usuário cadastrado com sucesso!']);
     } else {
-        echo "Erro ao cadastrar usuário.";
+        $response =  json_encode(['success' => true, 'message' => 'Não foi possível cadastrar o usuário!']);
     }
+
+    echo $response;
 }
 
 ?>
