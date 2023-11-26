@@ -311,7 +311,7 @@ if (!isset($_SESSION['usuario'])) {
                             O CPF informado é inválido. Corrija para continuar.
                         </div>
 
-                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
+<!--                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>-->
                         <button type="submit" class="btn btn-primary" id="BtnCadastro" onclick="cadastrarProfissional();" style="margin-top: 5px;float: right">Salvar</button>
                         <button type="submit" class="btn btn-primary" id="BtnEditar" style="margin-top: 5px;float: right">Salvar</button>
                         <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: right; color: red; margin-right: 30px;" data-dismiss="modal">Cancelar</button>

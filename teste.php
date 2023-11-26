@@ -11,24 +11,33 @@ require_once(".\bancoDeDados\RepositorioPessoas.php");
 require_once (".\model\usuarios\Login.php");
 require_once (".\bancoDeDados\RepositorioUsuario.php");
 
-$repo = new RepositorioUsuario();
+$repositorioPacientes = new RepositorioPessoas();
 
-$usuario = $repo->obterTodosUsuarios();
+$pacientes = $repositorioPacientes->obterTodosPacientes();
 
-$repoPro = new RepositorioPessoas()
-$profissionais =
+if ($pacientes) {
+    foreach ($pacientes as $paciente) {
+        $idPaciente = $paciente->getId();
+        $nomeCompleto = $paciente->getNome();
 
-//$repo = new RepositorioPessoas();
-//
-//$pessoa = $repo->obterTodasPessoas();
-//
-//var_dump($pessoa);
-//$login = new Login('joao@teste.com', 'hashed_password1');
-//
-//$login->autenticar();
-//
-//$response = array("result" => "success");
-////var_dump($response); exit();
-//return json_encode($response);
+        $exploNome = explode(' ', $nomeCompleto);
+        $firstLeterName = substr($exploNome[0], 0, 1);
+        $firstLeterMidle = substr(end($exploNome), 0, 1);
 
+        $pessoa[$idPaciente] = array(
+            "iniciais_nome" => $firstLeterName . $firstLeterMidle,
+            'nome' => $nomeCompleto,
+            "email" => $paciente->getEmail(),
+            "especialidade" => $paciente->getEspecialidade(),
+            "cpf" => $paciente->getCpf(),
+            "data_nascimento" => $paciente->getDataNascimento(),
+            "telefone" => $paciente->getTelefone(),
+            "crm" => $paciente->getNumeroConselho(),
+            "endereco" => $paciente->getEndereco()
+
+        );
+
+        var_dump($pessoa[$idPaciente]);
+    };
+}
 

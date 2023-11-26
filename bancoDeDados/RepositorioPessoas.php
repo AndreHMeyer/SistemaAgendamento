@@ -54,11 +54,11 @@ class RepositorioPessoas
 
     }
 
-    public function obterTodasPessoas()
+    public function obterTodosPacientes()
     {
         $conexao = $this->conexao;
 
-        $sql = "SELECT * FROM PESSOA order by id asc";
+        $sql = "SELECT * FROM PESSOA WHERE (ESPECIALIDADE IS NULL OR ESPECIALIDADE = '') AND CPF IS NOT NULL order by id asc";
         $result = mysqli_query($conexao, $sql);
 
         if ($result->num_rows > 0) {
@@ -76,8 +76,6 @@ class RepositorioPessoas
                     $row['dataNascimento'],
                     $row['telefone'],
                     $row['endereco'],
-                    $row['crm'],
-                    $row['especialidade'],
                     null,
                     null,
                     null,

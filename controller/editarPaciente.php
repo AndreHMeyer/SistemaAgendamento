@@ -1,5 +1,10 @@
 <?php
 
+use Database\RepositorioPessoas;
+use Pessoa\Pessoa;
+
+require_once("..\bancoDeDados\RepositorioPessoas.php");
+
 $id_paciente = $_REQUEST["id_paciente"];
 $nome = $_REQUEST["nome"];
 $cpf = $_REQUEST["cpf"];
@@ -8,7 +13,12 @@ $telefone = $_REQUEST['telefone'];
 $email = $_REQUEST["email"];
 $endereco = $_REQUEST["endereco"];
 
-$status = true;
+$repo = new RepositorioPessoas();
+$pessoaUpdate = new Pessoa($id_paciente, $nome, $email, $cpf, $dataNascimento, $telefone, $endereco, null, null, null, null);
+
+$status = $repo->updatePessoa($pessoaUpdate);
+
+
 
 if ($status) {
     $response = array("success" => true, "message" => "Operação concluída com sucesso.");

@@ -45,3 +45,5 @@ update pessoa set especialidade = 'Dermatologia' where id = 1;
 update pessoa set especialidade = 'Oftalmologia' where id = 2;
 update pessoa set especialidade = 'Reumatologia' where id = 3;
 update pessoa set especialidade = 'Clínico Geral' where id = 4;
+
+ALTER TABLE `consulta` CHANGE `data` `data` DATETIME NULL DEFAULT NULL;
