@@ -468,10 +468,11 @@ if (!isset($_SESSION['usuario'])) {
                         <span class="iniciais">${usuarios.iniciais_nome}</span>
                         <span style="margin-left: 10px;">${usuarios.nome}</span><br/>   
                     </td>
-                    <td style="vertical-align: middle;">${usuarios.email}</td>
                     <td class="info-text" style="vertical-align: middle;">
                         <span class="td_telefone">${usuarios.telefone}</span>
                     </td>
+                    <td style="vertical-align: middle;">${usuarios.email}</td>
+                    
                     <td class="icon" style="vertical-align: middle;">
                         <div class="icon-container">
                             <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalUsuario" onClick=buscarDadosEdicao("${key}")></span>
