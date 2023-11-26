@@ -117,6 +117,24 @@ if (!isset($_SESSION['usuario'])) {
         margin-right: 10px;
     }
 
+    .ies_ativa {
+        color: #3F8B35;
+        background-color: #E5F5E4;
+        font-weight: 600;
+    }
+
+    .ies_inativa {
+        color: #4E4E4E;
+        background-color: #E5F5E4;
+        font-weight: 600;
+    }
+
+    .ies_bloqueada {
+        color: #E61E00;
+        background-color: #FFDAD5;
+        font-weight: 600;
+    }
+
     .modal-cancelar-excluir {
         background-color: transparent;
     }
@@ -184,7 +202,6 @@ if (!isset($_SESSION['usuario'])) {
                     <th scope="col" class="sortable">Nome <i class="fas fa-sort"></i></th>
                     <th scope="col" class="sortable">Telefone<i class="fas fa-sort"></i></th>
                     <th scope="col" class="sortable" style="width: 250px;">E-mail<i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable" style="text-align:center;">Data Última Consulta</th>
                     <th scope="col"></th>
 
                 </tr>
@@ -455,7 +472,6 @@ if (!isset($_SESSION['usuario'])) {
                     <td class="info-text" style="vertical-align: middle;">
                         <span class="td_telefone">${usuarios.telefone}</span>
                     </td>
-                    <td style="vertical-align: middle; text-align:center;">${usuarios.ultima_consulta}</td>
                     <td class="icon" style="vertical-align: middle;">
                         <div class="icon-container">
                             <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalUsuario" onClick=buscarDadosEdicao("${key}")></span>
