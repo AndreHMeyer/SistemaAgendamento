@@ -1,24 +1,4 @@
-<?php
-$user = "root";
-$conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
 
-$queryPaciente = "SELECT nome FROM pessoa WHERE especialidade IS NULL";
-$exePaciente = $conexao->prepare($queryPaciente);
-$exePaciente->execute();
-
-while ($rowPaciente = $exePaciente->fetch(PDO::FETCH_ASSOC)) {
-    $paciente[] = $rowPaciente['nome'];
-}
-
-$queryProfissional = "SELECT nome FROM pessoa WHERE especialidade IS NOT NULL";
-$exeProfissional = $conexao->prepare($queryProfissional);
-$exeProfissional->execute();
-
-while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
-    $profissional[] = $rowProfissional['nome'];
-}
-
-?>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -64,12 +44,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                     <span class="item-name">Profissionais</span>
                 </a>
             </li>
-            <li class="nav-item">
-                <a href="#" class="nav-link " title="Consultas" data-toggle="modal" data-target="#consulta">
-                    <img width="35" src="img/agenda_icon.png" alt="Icone de Usuário">
-                    <span class="item-name">Consultas</span>
-                </a>
-            </li>
+            
             <li class="nav-item">
                 <a href="agendas.php" class="nav-link " title="Agenda">
                     <img width="35" src="img/agenda_icon.png" alt="Icone de Agenda">

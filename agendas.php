@@ -1,12 +1,30 @@
-
-
 <?php
-    session_start();
+session_start();
 
-    if(!isset($_SESSION['usuario'])) { 
-        header('Location: index.php');
-        exit;
-    }
+if (!isset($_SESSION['usuario'])) {
+    header('Location: index.php');
+    exit;
+}
+
+$user = "root";
+$conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
+
+$queryPaciente = "SELECT nome FROM pessoa WHERE especialidade IS NULL";
+$exePaciente = $conexao->prepare($queryPaciente);
+$exePaciente->execute();
+
+while ($rowPaciente = $exePaciente->fetch(PDO::FETCH_ASSOC)) {
+    $paciente[] = $rowPaciente['nome'];
+}
+
+$queryProfissional = "SELECT nome FROM pessoa WHERE especialidade IS NOT NULL";
+$exeProfissional = $conexao->prepare($queryProfissional);
+$exeProfissional->execute();
+
+while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
+    $profissional[] = $rowProfissional['nome'];
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -203,14 +221,12 @@
                 <input type="text" class="form-control search-bar" style="width: 800px;">
                 <div class="input-group-append filtro">
                     <button class="btn" type="button">
-                        <i class="fas fa-search"><img src="img/icon_filtro.png" alt="Icone filtro pesquisa"
-                                style="width: 20px;"></i>
+                        <i class="fas fa-search"><img src="img/icon_filtro.png" alt="Icone filtro pesquisa" style="width: 20px;"></i>
                     </button>
                 </div>
                 <div class="input-group-append search">
                     <button class="btn" type="button">
-                        <i class="fas fa-search"><img src="img/icon_search.png" alt="Icone lopa de pesquisa"
-                                style="width: 15px;"></i>
+                        <i class="fas fa-search"><img src="img/icon_search.png" alt="Icone lopa de pesquisa" style="width: 15px;"></i>
                     </button>
                 </div>
 
@@ -238,88 +254,55 @@
         </table>
     </div>
 
-    <div id="modalProfissional" class="modal fade" aria-labelledby="modalProfissional">
+    <div id="modalConsulta" class="modal fade" aria-labelledby="modalConsulta">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title"> <img src="img/person_icon.png" id="profissional-image" class="ml-2"
-                            width="30px;"> <span id="profissional-text"></span> Profissional</h5>
+                    <h5 class="modal-title"> <img src="img/person_icon.png" id="consulta-image" class="ml-2" width="30px;"> <span id="consulta-text"></span> Consulta</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formProfissional">
+                    <form id="formConsulta">
                         <div class="form-group">
-                            <label for="nome">Nome</label>
-                            <input type="text" class="form-control col-sm-12" id="nome" name="nome"
-                                placeholder="Nome Sobrenome" required>
+                            <label for="tipoConsulta">Tipo de consulta</label>
+                            <input type="text" class="form-control col-sm-12" id="tipoConsulta" name="tipoConsulta" placeholder="" required>
                         </div>
                         <div class="form-group">
                             <div class="form-row">
                                 <div class="col">
-                                    <label for="cpf">CPF</label>
-                                    <input type="text" class="form-control" id="cpf" name="cpf"
-                                        placeholder="123.456.789-10" required>
+                                    <label for="dataInicioConsulta">Data inicial da consulta</label>
+                                    <input type="datetime-local" class="form-control" id="dataInicioConsulta" name="dataInicioConsulta" required>
                                 </div>
                                 <div class="col">
-                                    <label for="dataNascimento">Data de Nascimento</label>
-                                    <input type="date" class="form-control" id="dataNascimento" name="dataNascimento"
-                                        placeholder="" required>
+                                    <label for="dataFimConsulta">Data final da consulta</label>
+                                    <input type="datetime-local" class="form-control" id="dataFimConsulta" name="dataFimConsulta" placeholder="" required>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="telefone">Telefone</label>
-                                    <input type="text" class="form-control" id="telefone" name="telefone"
-                                        placeholder="(99)9 9999-1234" required>
-                                </div>
-                                <div class="col">
-                                    <label for="email">E-mail</label>
-                                    <input type="email" class="form-control" id="email" name="email"
-                                        placeholder="nome@email.com" required>
-                                </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <label for="pacianteConsulta">Paciente</label>
+                                <select class="form-control" id="pacienteConsulta" required>
+                                    <?php
+                                    foreach ($paciente as $nome) {
+                                        echo "<option>" . $nome . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <label for="profissionalConsulta">Profissional</label>
+                                <select class="form-control" id="profissionalConsulta" required>
+                                    <?php
+                                    foreach ($profissional as $nome) {
+                                        echo "<option>" . $nome . "</option>";
+                                    }
+                                    ?>
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="crm">No. Conselho</label>
-                                    <input type="text" class="form-control" id="crm" name="crm" placeholder="123456"
-                                        required>
-                                </div>
-                                <div class="col">
-                                    <label for="conselho">Conselho</label>
-                                    <div class="input-group">
-                                        <input type="conselho" class="form-control" id="conselho" name="consl"
-                                            placeholder="CRM" required>
-                                        <select class="form-control" id="crm-estado" name="crm-estado">
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="endereco">Endereço</label>
-                                    <input type="text" class="form-control" id="endereco" name="endereco"
-                                        placeholder="Rua 123, número 456" required>
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="button" class="btn modal-cancelar-excluir"
-                            style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
-                        <button type="submit" class="btn btn-primary" id="BtnCadastroProfissional"
-                            onclick="cadastrarProfissional();" style="margin-top: 5px;float: right">Salvar</button>
-                        <button type="submit" class="btn btn-primary" id="BtnEditarProfissional" onclick="editar();"
-                            style="margin-top: 5px;float: right">Salvar</button>
-                        <button type="button" class="btn modal-cancelar-excluir"
-                            style="margin-top: 5px;float: right; color: red; margin-right: 30px;"
-                            data-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="BtnCadastroConsulta" style="margin-top: 5px;float: right">Salvar</button>
+                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
                     </form>
                 </div>
             </div>
@@ -340,8 +323,7 @@
                 <div class="modal-body">
                     <div class="icon-message d-flex align-items-center">
                         <span id="iconeDoModal" style="font-size: 2rem;"></span> <!-- Ícone maior -->
-                        <p id="mensagemDoModal" class="ml-3"
-                            style="font-size: 20px; padding-top: 15px; padding-left: -15px;"></p>
+                        <p id="mensagemDoModal" class="ml-3" style="font-size: 20px; padding-top: 15px; padding-left: -15px;"></p>
                         <!-- Mensagem maior e com margem à esquerda -->
                     </div>
                 </div>
@@ -354,18 +336,36 @@
 
 </body>
 <script>
-
     function abrirModal() {
-        $('#modalProfissional').modal('show')
+        $('#modalConsulta').modal('show')
     }
 
-    $(document).ready(function () {
-        $(function () { $("#nav-head").load("navbar_head.html"); });
-        $(function () { $("#nav-lateral").load("navbar_lateral.php"); });
+    var inicio = document.getElementById('dataInicioConsulta');
+    var fim = document.getElementById('dataFimConsulta');
+    var dataAtual = new Date();
+    var ano = dataAtual.getFullYear();
+    var mes = ('0' + (dataAtual.getMonth() + 1)).slice(-2); // Adiciona 1 ao mês porque os meses são zero-indexed
+    var dia = ('0' + dataAtual.getDate()).slice(-2);
+    var hora = ('0' + dataAtual.getHours()).slice(-2);
+    var minutos = ('0' + dataAtual.getMinutes()).slice(-2);
+
+    var dataHoraAtual = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos;
+    var dataHoraAtualMaisUm = ano + '-' + mes + '-' + dia + 'T' + hora + ':' + minutos;
+
+    inicio.min = dataHoraAtual;
+    fim.min = dataHoraAtual;
+
+    $(document).ready(function() {
+        $(function() {
+            $("#nav-head").load("navbar_head.html");
+        });
+        $(function() {
+            $("#nav-lateral").load("navbar_lateral.php");
+        });
     });
 
-    function visualizarAgenda(id) {
-        let id_profissional = id;
+    function visualizarAgenda(id_profissional) {
+
 
         if (id_profissional) {
             const url = 'calendario.php?id_profissional=' + id_profissional;
@@ -376,7 +376,7 @@
     function buscaInfoTable() {
         $.ajax({
             url: '../SistemaAgendamento/buscar_profissional.php',
-            success: function (response) {
+            success: function(response) {
                 createTable(response);
 
             }
@@ -405,13 +405,7 @@
                         <span class="ocupacao">${profissional.ocupacao}</span>
                         <span class="disponibilidade">${profissional.disponibilidade}</span>
                     </td>
-                    <td style="vertical-align: middle; text-align:center;">${profissional.prox_data}</td>
-                    <td class="icon" style="vertical-align: middle;">
-                        <div class="icon-container">
-                            <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalProfissional" onClick=buscarDadosEdicao("${key}")></span>
-                            <span><img src="img/icon_lixeira.png" onclick="excluir('${key}')"></span>
-                        </div>
-                    </td>`;
+                    <td style="vertical-align: middle; text-align:center;">${profissional.prox_data}</td>`;
 
                 table.appendChild(row);
             }
@@ -429,93 +423,83 @@
     }
 
 
-    function buscarDadosEdicao(id) {
-        let id_profissional = id;
+    // function buscarDadosEdicao(id) {
 
-        $('#profissional-text').text('Editar');
 
-        $('#BtnEditarProfissional').show();
-        $('#BtnCadastroProfissional').hide();
+    //     $('#consulta-text').text('Editar');
 
-        const url = "../SistemaAgendamento/buscar_profissional.php";
+    //     $('#BtnEditarConsulta').show();
+    //     $('#BtnCadastroConsulta').hide();
 
+    //     const url = "../SistemaAgendamento/buscar_consulta.php";
+
+    //     $.ajax({
+    //         url: url,
+    //         data: {
+    //             id: id
+    //         },
+    //         success: function(response) {
+    //             // console.log(response);
+    //             var data = response.response;
+    //             const DataInicio = formatDate(data.DataInicio);
+    //             const dataConsultaFimFormatada = formatDate(data.DataFim);
+    //             $('#observacao').val(data.observacao);
+    //             $('#DataInicio').val(dataConsultaInicioFormatada);
+    //             $('#DataFim').val(dataConsultaFimFormatada);
+    //             $('#idPessoal').val(data.idPessoal);
+    //             $('#idProfissional').val(data.idProfissional);
+    //         }
+    //     });
+
+    //     const dadosAlterados = {
+    //         nome: $('#nome').val(),
+    //         cpf: $('#cpf').val(),
+    //         data_nascimento: $('#dataNascimento').val(),
+    //         telefone: $('#telefone').val(),
+    //         email: $('#email').val(),
+    //         crm: $('#crm').val(),
+    //         conselho: $('#conselho').val(),
+    //         crm_estado: $('#crm-estado').val(),
+    //         endereco: $('#endereco').val()
+    //     };
+
+    //     editar(dadosAlterados);
+    // }
+
+    // function editar(dados) {
+    //     $('#formProfissional').on('submit', function(event) {
+    //         event.preventDefault();
+    //         console.log(dados);
+    //     });
+
+
+    // }
+
+    function cadastrarConsulta() {
+
+        let DataInicio = $('#DataInicioConsulta').val();
+        DataInicio = formatDate(DataInicio);
+        let dataFim = $('#DataFimConsulta').val(dataConsultaInicioFormatada);
+        dataFim = formatDate(data.DataFimConsulta);
+        let observacao = $('#observacao').val(data.observacao);
+        let idPessoal = $('#idPessoal').val(data.idPessoal);
+        let idProfissional = $('#idProfissional').val(data.idProfissional);
         $.ajax({
-            url: url,
-            data: { id_profissional: id_profissional },
-            success: function (response) {
-                // console.log(response);
-                var data = response.response;
-                const dataNascimentoFormatada = formatDate(data.data_nascimento);
-
-                $('#nome').val(data.nome);
-                $('#cpf').val(data.cpf);
-                $('#dataNascimento').val(dataNascimentoFormatada);
-                $('#telefone').val(data.telefone);
-                $('#email').val(data.email);
-                $('#crm').val(data.crm);
-                $('#conselho').val(data.conselho);
-                $('#crm-estado').val(data.crm_estado);
-                $('#endereco').val(data.endereco);
-
-
-            }
-        });
-
-        const dadosAlterados = {
-            nome: $('#nome').val(),
-            cpf: $('#cpf').val(),
-            data_nascimento: $('#dataNascimento').val(),
-            telefone: $('#telefone').val(),
-            email: $('#email').val(),
-            crm: $('#crm').val(),
-            conselho: $('#conselho').val(),
-            crm_estado: $('#crm-estado').val(),
-            endereco: $('#endereco').val()
-        };
-
-        editar(dadosAlterados);
-    }
-
-    function editar(dados) {
-        $('#formProfissional').on('submit', function (event) {
-            event.preventDefault();
-            console.log(dados);
-        });
-
-
-    }
-
-    function cadastrarProfissional() {
-        let nome = $('#nome').val();
-        let cpf = $('#cpf').val();
-        let data_nascimento = $('#dataNascimento').val();
-        let telefone = $('#telefone').val();
-        let email = $('#email').val();
-        let crm = $('#crm').val();
-        let conselho = $('#conselho').val();
-        let crm_estado = $('#crm-estado').val();
-        let endereco = $('#endereco').val();
-
-        $.ajax({
-            url: "./controller/cadastrarProfissional.php",
+            url: "./controller/cadastrarConsulta.php",
             method: "POST",
             dataType: 'json',
             data: {
-                nome: nome,
-                cpf: cpf,
-                data_nascimento: data_nascimento,
-                telefone: telefone,
-                email: email,
-                crm: crm,
-                conselho: conselho,
-                crm_estado: crm_estado,
-                endereco: endereco
+                DataInicio: DataInicio,
+                dataFim: dataFim,
+                observacao: observacao,
+                idPessoal: idPessoal,
+                idProfissional: idProfissional
             },
-            success: function (response) {
+            success: function(response) {
 
                 if (response && response.success) {
-                    $('#modalProfissional').modal('hide');
-                    document.getElementById('formProfissional').reset();
+                    $('#modalConsulta').modal('hide');
+                    document.getElementById('formConsulta').reset();
                     $('#mensagemDoModal').text(response.message);
                     $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
                     $('#modalResponse').modal('show');
@@ -525,7 +509,7 @@
                     $('#modalResponse').modal('show');
                 }
             },
-            error: function (error) {
+            error: function(error) {
                 $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
                 $('#mensagemDoModal').text(error);
                 $('#modalResponse').modal('show');
@@ -533,150 +517,10 @@
         });
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
-
-        $('.add-agenda').on('click', function () {
-            $('#profissional-text').text('Cadastrar');
-            $('#BtnEditarProfissional').hide();
-            $('#BtnCadastroProfissional').show();
-            document.getElementById('formProfissional').reset();
-        });
-
-        $('#BtnCadastroProfissional').on('click', function (event) {
-            $('#formProfissional').on('submit', function (event) {
-                event.preventDefault();
-            });
-        });
-
-        $('.modal-cancelar-excluir').on('click', function (event) {
-            document.getElementById('formProfissional').reset();
-        });
-
-
-        const estados = [{
-            sigla: 'AC',
-            nome: 'Acre'
-        },
-        {
-            sigla: 'AL',
-            nome: 'Alagoas'
-        },
-        {
-            sigla: 'AP',
-            nome: 'Amapá'
-        },
-        {
-            sigla: 'AM',
-            nome: 'Amazonas'
-        },
-        {
-            sigla: 'BA',
-            nome: 'Bahia'
-        },
-        {
-            sigla: 'CE',
-            nome: 'Ceará'
-        },
-        {
-            sigla: 'DF',
-            nome: 'Distrito Federal'
-        },
-        {
-            sigla: 'ES',
-            nome: 'Espírito Santo'
-        },
-        {
-            sigla: 'GO',
-            nome: 'Goías'
-        },
-        {
-            sigla: 'MA',
-            nome: 'Maranhão'
-        },
-        {
-            sigla: 'MT',
-            nome: 'Mato Grosso'
-        },
-        {
-            sigla: 'MS',
-            nome: 'Mato Grosso do Sul'
-        },
-        {
-            sigla: 'MG',
-            nome: 'Minas Gerais'
-        },
-        {
-            sigla: 'PA',
-            nome: 'Pará'
-        },
-        {
-            sigla: 'PB',
-            nome: 'Paraíba'
-        },
-        {
-            sigla: 'PR',
-            nome: 'Paraná'
-        },
-        {
-            sigla: 'PE',
-            nome: 'Pernambuco'
-        },
-        {
-            sigla: 'PI',
-            nome: 'Piauí'
-        },
-        {
-            sigla: 'RJ',
-            nome: 'Rio de Janeiro'
-        },
-        {
-            sigla: 'RN',
-            nome: 'Rio Grande do Norte'
-        },
-        {
-            sigla: 'RS',
-            nome: 'Rio Grande do Sul'
-        },
-        {
-            sigla: 'RO',
-            nome: 'Rondônia'
-        },
-        {
-            sigla: 'RR',
-            nome: 'Roraíma'
-        },
-        {
-            sigla: 'SC',
-            nome: 'Santa Catarina'
-        },
-        {
-            sigla: 'SP',
-            nome: 'São Paulo'
-        },
-        {
-            sigla: 'SE',
-            nome: 'Sergipe'
-        },
-        {
-            sigla: 'TO',
-            nome: 'Tocantins'
-        },
-        ];
-
-        const selectEstado = document.getElementById('crm-estado');
-
-        for (const estado of estados) {
-            const option = document.createElement('option');
-            option.value = estado.sigla;
-            option.textContent = estado.sigla + " - " + estado.nome;
-            selectEstado.appendChild(option);
-        }
+    document.addEventListener('DOMContentLoaded', function() {
 
         buscaInfoTable();
     });
-
-
-
 </script>
 
 </html>
