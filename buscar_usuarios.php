@@ -19,8 +19,7 @@ if (!empty($campo_pesquisa)) {
         "iniciais_nome" => $firstLeterName . $firstLeterMidle,
         "nome" => $nomeCompleto,
         "email" => 'mat@teste.com.br',
-        "telefone" => '(47) 99999-9999',
-        "ultima_consulta" => '05/01/2023'
+        "telefone" => '(47) 99999-9999'
     );
 } elseif (!empty($id_usuario)) {
 
@@ -43,12 +42,8 @@ if (!empty($campo_pesquisa)) {
         "iniciais_nome" => $firstLeterName . $firstLeterMidle,
         "nome" => $nomeCompleto,
         "email" => 'rubia@teste.com.br',
-        "telefone" => '(47) 99999-9999',
-        "ultima_consulta" => '05/01/2023'
+        "telefone" => '(47) 99999-9999'
     );
 }
-
-
-
 
 echo json_encode(["response" => $usuario]);
