@@ -79,9 +79,9 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
 
 
             <li class="nav-item">
-                <a href="#" class="nav-link " title="Configurações">
-                    <img width="35" src="img/settings_icon.png" alt="Icone do Cadastro de Profissionais">
-                    <span class="item-name">Configurações</span>
+                <a href="usuarios.php" class="nav-link " title="Usuários">
+                    <img width="35" src="img/settings_icon.png" alt="Icone de Usuários">
+                    <span class="item-name">Usuários</span>
                 </a>
             </li>
         </ul>
