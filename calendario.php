@@ -10,7 +10,7 @@ $user = "root";
 $conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
 $id_profissional = isset($_REQUEST['id_profissional']) ? $_REQUEST['id_profissional'] : "";
 
-$queryConsultas = "SELECT observacao, data FROM consulta WHERE idProfissional = " . $id_profissional;
+$queryConsultas = "SELECT observacao, DataInicio, DataFim FROM consulta WHERE idProfissional = " . $id_profissional;
 
 $exeConsultas = $conexao->prepare($queryConsultas);
 $exeConsultas->execute();
@@ -19,7 +19,7 @@ while ($rowConsultas = $exeConsultas->fetch(PDO::FETCH_ASSOC)) {
     // $data = $rowConsultas['data'];
     // $observacao = $rowConsultas['observacao'];
     extract($rowConsultas);
-    $events[] = ['title' => utf8_encode($observacao), 'start' => $data];
+    $events[] = ['title' => utf8_encode($observacao), 'start' => $DataInicio, 'end' => $DataFim];
 }
 
 
