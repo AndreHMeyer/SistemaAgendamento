@@ -184,7 +184,7 @@ if (!isset($_SESSION['usuario'])) {
                     <th scope="col" class="sortable">Nome <i class="fas fa-sort"></i></th>
                     <th scope="col" class="sortable">Telefone<i class="fas fa-sort"></i></th>
                     <th scope="col" class="sortable" style="width: 250px;">E-mail<i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable" style="text-align:center;">Data Última Consulta</th>
+                    <th scope="col" class="sortable" style="text-align:center;">Data Nascimento</th>
                     <th scope="col"></th>
 
                 </tr>
@@ -251,7 +251,7 @@ if (!isset($_SESSION['usuario'])) {
                                 </div> -->
                             </div>
                         </div>
-                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>
+<!--                        <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: left; color: red;" data-dismiss="modal">Excluir</button>-->
                         <button type="submit" class="btn btn-primary" id="BtnCadastro" onclick="cadastrarPaciente();" style="margin-top: 5px;float: right">Salvar</button>
                         <button type="submit" class="btn btn-primary" id="BtnEditar" style="margin-top: 5px;float: right">Salvar</button>
                         <button type="button" class="btn modal-cancelar-excluir" style="margin-top: 5px;float: right; color: red; margin-right: 30px;" data-dismiss="modal">Cancelar</button>
@@ -446,6 +446,8 @@ if (!isset($_SESSION['usuario'])) {
 
                 row.classList.add('tr-profissional');
 
+
+
                 row.innerHTML = `
                     <td style="vertical-align: middle;"></td>
                     
@@ -458,7 +460,7 @@ if (!isset($_SESSION['usuario'])) {
                     </td>
                     <td style="vertical-align: middle;">${pacientes.email}</td>
                     
-                    <td style="vertical-align: middle; text-align:center;">${pacientes.ultima_consulta}</td>
+                    <td style="vertical-align: middle; text-align:center;">${pacientes.data_nascimento}</td>
                     <td class="icon" style="vertical-align: middle;">
                         <div class="icon-container">
                             <span><img src="img/icon_lapis.png" data-toggle="modal" data-target="#modalPaciente" onClick=buscarDadosEdicao("${key}")></span>
@@ -569,7 +571,7 @@ if (!isset($_SESSION['usuario'])) {
                 $('#BtnEditar').on('click', function() {
 
                     const dadosAlterados = {
-                        id: id_paciente,
+                        id_paciente: id_paciente,
                         nome: $('#nomePac').val(),
                         cpf: $('#cpfPac').val(),
                         data_nascimento: $('#dataNascimentoPac').val(),
