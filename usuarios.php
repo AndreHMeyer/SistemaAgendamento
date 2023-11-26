@@ -578,9 +578,9 @@ if (!isset($_SESSION['usuario'])) {
 
                     const dadosAlterados = {
                         id: id_usuario,
-                        nomeUsuario: $('#nomeUser').val();
-                        telefone: $('#telefoneUser').val();
-                        email: $('#emailUser').val();
+                        nomeUsuario: $('#nomeUser').val(),
+                        telefone: $('#telefoneUser').val(),
+                        email: $('#emailUser').val()
                     };
 
                     editar(dadosAlterados);
