@@ -101,7 +101,8 @@ while ($rowConsultas = $exeConsultas->fetch(PDO::FETCH_ASSOC)) {
                 //    }
                 //},
                 editable: true,
-                dayMaxEvents: true, // allow "more" link when too many events
+                dayMaxEvents: 2, // allow "more" link when too many events
+                
                 events: <?= json_encode($events); ?>,
 
             });
