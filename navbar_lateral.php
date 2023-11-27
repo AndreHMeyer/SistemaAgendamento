@@ -134,61 +134,7 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" id="consulta">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Cadastrar Consulta</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="formConsulta">
-                        <div class="form-group">
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="observacao">Tipo de consulta</label>
-                                    <input type="text" class="form-control col-sm-12" id="observacao" placeholder="" required>
-                                    <label for="dataConsulta">Data da consulta</label>
-                                    <input type="date" class="form-control col-sm-12" id="dataConsulta" placeholder="" required>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col">
-                                    <label for="pacianteConsulta">Paciente</label>
-                                    <select class="form-control" id="pacienteConsulta" required>
-                                        <?php
-                                        foreach ($paciente as $nome) {
-                                            echo "<option>" . $nome . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <label for="profissionalConsulta">Profissional</label>
-                                    <select class="form-control" id="profissionalConsulta" required>
-                                        <?php
-                                        foreach ($profissional as $nome) {
-                                            echo "<option>" . $nome . "</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-row">
-                                <div class="col">
 
-                                </div>
-                            </div>
-                        </div>
-
-                        <button type="submit" class="btn btn-primary" id="BtnCadastroConsulta" style="margin-top: 5px;float: right">Salvar</button>
-                        <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
-
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
     <script>
         $(document).ready(function() {
             /*Não quero que esses elementos sejam sobescritos, portanto irei usar const para declarara essas variaveis*/

@@ -9,20 +9,20 @@ if (!isset($_SESSION['usuario'])) {
 $user = "root";
 $conexao = new PDO("mysql:host=localhost;dbname=sistemaagendamento", $user);
 
-$queryPaciente = "SELECT nome FROM pessoa WHERE especialidade IS NULL";
+$queryPaciente = "SELECT id, nome FROM pessoa WHERE especialidade IS NULL";
 $exePaciente = $conexao->prepare($queryPaciente);
 $exePaciente->execute();
 
 while ($rowPaciente = $exePaciente->fetch(PDO::FETCH_ASSOC)) {
-    $paciente[] = $rowPaciente['nome'];
+    $paciente[] = ['idPessoa' => $rowPaciente['id'], 'nome' => $rowPaciente['nome']];
 }
 
-$queryProfissional = "SELECT nome FROM pessoa WHERE especialidade IS NOT NULL";
+$queryProfissional = "SELECT id, nome FROM pessoa WHERE especialidade IS NOT NULL";
 $exeProfissional = $conexao->prepare($queryProfissional);
 $exeProfissional->execute();
 
 while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
-    $profissional[] = $rowProfissional['nome'];
+    $profissional[] = ['idProfissional' => $rowProfissional['id'], 'nome' => $rowProfissional['nome']];
 }
 
 ?>
@@ -254,7 +254,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
         </table>
     </div>
 
-    <div id="modalConsulta" class="modal fade" aria-labelledby="modalConsulta">
+    <div id="modalConsulta" class="modal" aria-labelledby="modalConsulta">
         <div class="modal-dialog modal-lg " role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -264,7 +264,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form id="formConsulta">
+                    <form id="formConsulta" name="formConsulta">
                         <div class="form-group">
                             <label for="tipoConsulta">Tipo de consulta</label>
                             <input type="text" class="form-control col-sm-12" id="tipoConsulta" name="tipoConsulta" placeholder="" required>
@@ -284,24 +284,26 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                         <div class="form-row">
                             <div class="col">
                                 <label for="pacianteConsulta">Paciente</label>
-                                <select class="form-control" id="pacienteConsulta" required>
+                                <select class="form-control" id="pacienteConsulta" name="pacienteConsulta" required>
+                                    <option selected>Selecione um paciente</option>
                                     <?php
-                                    foreach ($paciente as $nome) {
-                                        echo "<option>" . $nome . "</option>";
+                                    foreach ($paciente as $key) {
+                                        echo '<option value="' . $key['idPessoa'] . '">' . $key['nome'] . "</option>";
                                     }
                                     ?>
                                 </select>
                                 <label for="profissionalConsulta">Profissional</label>
-                                <select class="form-control" id="profissionalConsulta" required>
+                                <select class="form-control" id="profissionalConsulta" name="profissionalConsulta" required>
+                                    <option selected>Selecione um profissional</option>
                                     <?php
-                                    foreach ($profissional as $nome) {
-                                        echo "<option>" . $nome . "</option>";
+                                    foreach ($profissional as $key) {
+                                        echo '<option value="' . $key['idProfissional'] . '">' . $key['nome'] . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary" id="BtnCadastroConsulta" style="margin-top: 5px;float: right">Salvar</button>
+                        <button onclick="cadastrarConsulta()" class="btn btn-primary" id="BtnCadastroConsulta" style="margin-top: 5px;float: right">Salvar</button>
                         <button type="button" class="btn btn-link" style="margin-top: 5px;float: right; color: red; margin-right: 30px;">Cancelar</button>
                     </form>
                 </div>
@@ -413,14 +415,14 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
     }
 
 
-    function formatDate(data) {
-        const partes = data.split('/');
-        if (partes.length === 3) {
-            // Reorganize as partes para o formato aaaa-mm-dd
-            return `${partes[2]}-${partes[1]}-${partes[0]}`;
-        }
-        return data; // Retorne a data no formato original se não for possível formatar
-    }
+    // function formatDate(data) {
+    //     const partes = data.split('/');
+    //     if (partes.length === 3) {
+    //         // Reorganize as partes para o formato aaaa-mm-dd
+    //         return `${partes[2]}-${partes[1]}-${partes[0]}`;
+    //     }
+    //     return data; // Retorne a data no formato original se não for possível formatar
+    // }
 
 
     // function buscarDadosEdicao(id) {
@@ -476,29 +478,27 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
     // }
 
     function cadastrarConsulta() {
-
-        let DataInicio = $('#DataInicioConsulta').val();
-        DataInicio = formatDate(DataInicio);
-        let dataFim = $('#DataFimConsulta').val(dataConsultaInicioFormatada);
-        dataFim = formatDate(data.DataFimConsulta);
-        let observacao = $('#observacao').val(data.observacao);
-        let idPessoal = $('#idPessoal').val(data.idPessoal);
-        let idProfissional = $('#idProfissional').val(data.idProfissional);
+        $('#modalConsulta').modal('hide');
+        let DataInicio = document.getElementById("dataInicioConsulta").value;
+        let DataFim = document.getElementById("dataFimConsulta").value;
+        let observacao = $('#tipoConsulta').val();
+        let idPessoa = document.getElementById("pacienteConsulta").value;
+        let idProfissional = document.getElementById("profissionalConsulta").value;
         $.ajax({
-            url: "./controller/cadastrarConsulta.php",
+            url: "../cadastrarConsulta.php",
             method: "POST",
             dataType: 'json',
             data: {
                 DataInicio: DataInicio,
-                dataFim: dataFim,
+                DataFim: DataFim,
                 observacao: observacao,
-                idPessoal: idPessoal,
+                idPessoa: idPessoa,
                 idProfissional: idProfissional
             },
             success: function(response) {
 
                 if (response && response.success) {
-                    $('#modalConsulta').modal('hide');
+                    
                     document.getElementById('formConsulta').reset();
                     $('#mensagemDoModal').text(response.message);
                     $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
@@ -508,12 +508,13 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                     $('#mensagemDoModal').text(response.message);
                     $('#modalResponse').modal('show');
                 }
-            },
-            error: function(error) {
-                $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
-                $('#mensagemDoModal').text(error);
-                $('#modalResponse').modal('show');
             }
+            // ,
+            // error: function(error) {
+            //     $('#iconeDoModal').html('<i class="bi bi-exclamation-triangle text-danger"></i>');
+            //     $('#mensagemDoModal').text(error);
+            //     $('#modalResponse').modal('show');
+            // }
         });
     }
 
