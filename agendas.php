@@ -233,7 +233,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
             </div>
         </div>
         <button class="btn add-agenda" type="button" onclick="abrirModal();"> +
-            Adicionar </button>
+            Agendar paciente </button>
     </div>
 
     <div class="table-container">
@@ -242,9 +242,9 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                 <tr>
                     <th scope="col"></th>
                     <th scope="col" class="sortable">Profissional <i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable">Situação<i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable" style="width: 250px;">Ocupação<i class="fas fa-sort"></i></th>
-                    <th scope="col" class="sortable" style="text-align:center;">Próxima data livre</th>
+                    <th scope="col" class="sortable">Especialidade<i class="fas fa-sort"></i></th>
+                    <th scope="col" class="sortable" style="width: 250px;">Pacientes agendados<i class="fas fa-sort"></i></th>
+                    <th scope="col" class="sortable" style="text-align:center;">Próximo paciente</th>
                     <th scope="col"></th>
                 </tr>
             </thead>
@@ -400,9 +400,9 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
                     <td style="vertical-align: middle;"></td>
                     <td style="display: flex; align-items: center;">
                         <a href="calendario.php?id_profissional=${key}" class="iniciais">${profissional.iniciais_nome}</a>
-                        <span style="margin-left: 10px;">${profissional.email}</span>
+                        <a href="calendario.php?id_profissional=${key}" style="margin-left: 10px;">${profissional.nome}</a>
                     </td>
-                    <td style="vertical-align: middle;">${profissional.situacao}</td>
+                    <td style="vertical-align: middle;">${profissional.especialidade}</td>
                     <td class="info-text" style="vertical-align: middle;">
                         <span class="ocupacao">${profissional.ocupacao}</span>
                         <span class="disponibilidade">${profissional.disponibilidade}</span>
@@ -485,7 +485,7 @@ while ($rowProfissional = $exeProfissional->fetch(PDO::FETCH_ASSOC)) {
         let idPessoa = document.getElementById("pacienteConsulta").value;
         let idProfissional = document.getElementById("profissionalConsulta").value;
         $.ajax({
-            url: "../cadastrarConsulta.php",
+            url: "./controller/cadastrarConsulta.php",
             method: "POST",
             dataType: 'json',
             data: {
