@@ -493,7 +493,7 @@ if (!isset($_SESSION['usuario'])) {
                         $('.modal-title-response').text('Sucesso!!');
                         $('#iconeDoModal').html('<i class="bi bi-check-circle text-success"></i>');
                         $('#modalResponse').modal('show');
-                        $('#modalResponse .modal-footer .btn-primary').on('click', function() {
+                        $('#modalResponse .modal-footer .btn-primary').off('click').on('click', function() {
                             $('#modalResponse .modal-footer .btn-primary').off('click'); //prevenir envio multiplo
                             location.reload();
                         });

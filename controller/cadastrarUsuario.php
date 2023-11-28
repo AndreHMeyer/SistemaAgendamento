@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $repo = new RepositorioUsuario();
 
-    $novoUsuario = new Usuario($nomeUsuario, $senha, $email);
+    $novoUsuario = new Usuario(null, $nomeUsuario, $senha, $email);
 
     $sucesso = $repo->insertUsuario($novoUsuario);
 
